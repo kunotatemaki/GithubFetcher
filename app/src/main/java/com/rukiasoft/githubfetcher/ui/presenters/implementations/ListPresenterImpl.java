@@ -1,7 +1,6 @@
 package com.rukiasoft.githubfetcher.ui.presenters.implementations;
 
 import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.OnLifecycleEvent;
 import android.util.Log;
 import android.view.View;
 
@@ -22,12 +21,12 @@ import javax.inject.Inject;
 public class ListPresenterImpl implements ListPresenter{
 
     private static final String TAG = LogHelper.makeLogTag(ListPresenterImpl.class);
-    NetworkHelper mNetworkHelper;
+    private NetworkHelper mNetworkHelper;
 
-    View mView;
+    private View mView;
 
     @Inject
-    public ListPresenterImpl(NetworkHelper mNetworkHelper) {
+    ListPresenterImpl(NetworkHelper mNetworkHelper) {
         this.mNetworkHelper = mNetworkHelper;
     }
 
@@ -43,7 +42,7 @@ public class ListPresenterImpl implements ListPresenter{
 
     @Override
     public void showProgressBar() {
-        Log.d(TAG, "MUESTRO");
+        Log.d(TAG, "MUESTRO LA BARRA");
         if(mView != null){
             mView.setVisibility(View.VISIBLE);
         }
@@ -51,7 +50,7 @@ public class ListPresenterImpl implements ListPresenter{
 
     @Override
     public void hideProgressBar() {
-        Log.d(TAG, "OCULTO");
+        Log.d(TAG, "OCULTO LA BARRA");
         if(mView != null){
             mView.setVisibility(View.INVISIBLE);
         }
@@ -70,5 +69,14 @@ public class ListPresenterImpl implements ListPresenter{
     @Override
     public void removeView(){
         mView = null;
+    }
+
+    @Override
+    public void downloadUsersIfNecessary(MutableLiveData<List<UserBasicResponse>> users) {
+        if(users.getValue() == null){
+            Log.d(TAG, "No hay usuarios, los descargo");
+            showProgressBar();
+            getUsers(users);
+        }
     }
 }

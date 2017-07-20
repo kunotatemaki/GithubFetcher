@@ -3,6 +3,8 @@ package com.rukiasoft.githubfetcher.ui.activities;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModel;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
@@ -23,6 +25,7 @@ import com.rukiasoft.githubfetcher.network.NetworkHelper;
 import com.rukiasoft.githubfetcher.network.retrofit.RetrofitNetworkHelperImpl;
 import com.rukiasoft.githubfetcher.ui.observers.ListActivityObserver;
 import com.rukiasoft.githubfetcher.ui.presenters.interfaces.ListPresenter;
+import com.rukiasoft.githubfetcher.ui.viewmodels.ListViewModel;
 import com.rukiasoft.githubfetcher.utils.LogHelper;
 
 import java.util.ArrayList;
@@ -56,29 +59,17 @@ public class ListActivity extends BaseActivity {
         mObserver = new ListActivityObserver(this);
 
         //get the view Model to observe the data
-
-
-
-    }
-
-    @Override
-    protected void onPostResume() {
-        super.onPostResume();
-        MutableLiveData<UserDetailedResponse> user = new MutableLiveData<>();
-        user.observe(this, new Observer<UserDetailedResponse>() {
+        ListViewModel listViewModel = ViewModelProviders.of(this).get(ListViewModel.class);
+        listViewModel.getUsers().observe(this, new Observer<List<UserBasicResponse>>() {
             @Override
-            public void onChanged(@Nullable UserDetailedResponse userDetailedResponse) {
+            public void onChanged(@Nullable List<UserBasicResponse> listOfUsers) {
                 Log.d(TAG, "he actualizado los datos");
-
 
                 presenter.hideProgressBar();
             }
         });
+        presenter.downloadUsersIfNecessary(listViewModel.getUsers());
 
-        user.setValue(new UserDetailedResponse());
-        Log.d(TAG, "voy a pedir iformación");
-        presenter.showProgressBar();
-        presenter.getUserInfo("kunotatemaki", user);
     }
 
     public ListPresenter getPresenter() {

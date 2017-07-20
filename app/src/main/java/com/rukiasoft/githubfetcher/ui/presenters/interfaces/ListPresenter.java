@@ -29,4 +29,5 @@ public interface ListPresenter {
 
     void removeView();
 
+    void downloadUsersIfNecessary(MutableLiveData<List<UserBasicResponse>> users);
 }
