@@ -11,7 +11,7 @@ import android.view.MenuItem;
 
 import com.rukiasoft.githubfetcher.R;
 
-public class GithubListActivity extends AppCompatActivity {
+public class GithubListActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
