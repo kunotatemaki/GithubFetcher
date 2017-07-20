@@ -4,7 +4,7 @@ import android.app.Application;
 
 import com.rukiasoft.githubfetcher.injection.components.DaggerGithubFetcherComponent;
 import com.rukiasoft.githubfetcher.injection.components.GithubFetcherComponent;
-import com.rukiasoft.githubfetcher.injection.modules.GithubFetcherModule;
+import com.rukiasoft.githubfetcher.injection.modules.NetworkModule;
 
 /**
  * Created by Roll on 20/7/17.
@@ -18,7 +18,7 @@ public class GithubFetcherApplication extends Application {
     public void onCreate() {
         super.onCreate();
         mComponent = DaggerGithubFetcherComponent.builder()
-                .githubFetcherModule(new GithubFetcherModule())
+                .networkModule(new NetworkModule())
                 .build();
 
     }

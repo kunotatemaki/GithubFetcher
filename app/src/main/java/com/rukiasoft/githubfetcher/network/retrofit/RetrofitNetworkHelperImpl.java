@@ -12,6 +12,8 @@ import com.rukiasoft.githubfetcher.utils.LogHelper;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -25,11 +27,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitNetworkHelperImpl implements NetworkHelper {
 
     private static final String TAG = LogHelper.makeLogTag(RetrofitNetworkHelperImpl.class);
-    private Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl(GithubFetcherConstants.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build();
+    private final Retrofit retrofit;
 
+    @Inject
+    public RetrofitNetworkHelperImpl() {
+        retrofit = new Retrofit.Builder()
+                .baseUrl(GithubFetcherConstants.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+    }
 
     @Override
     public void getUsers(final MutableLiveData<List<UserBasicResponse>> users) {

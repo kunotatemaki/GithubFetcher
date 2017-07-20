@@ -1,11 +1,16 @@
 package com.rukiasoft.githubfetcher.ui.activities;
 
 import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModel;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,56 +21,71 @@ import com.rukiasoft.githubfetcher.model.UserBasicResponse;
 import com.rukiasoft.githubfetcher.model.UserDetailedResponse;
 import com.rukiasoft.githubfetcher.network.NetworkHelper;
 import com.rukiasoft.githubfetcher.network.retrofit.RetrofitNetworkHelperImpl;
+import com.rukiasoft.githubfetcher.ui.observers.ListActivityObserver;
+import com.rukiasoft.githubfetcher.ui.presenters.interfaces.ListPresenter;
+import com.rukiasoft.githubfetcher.utils.LogHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
-public class GithubListActivity extends BaseActivity {
+public class ListActivity extends BaseActivity {
+
+    private static final String TAG = LogHelper.makeLogTag(ListActivity.class);
+
+    ListActivityObserver mObserver;
 
     @Inject
-    NetworkHelper mNetworkHelper;
+    ListPresenter presenter;
+
+    View vistaDePrueba;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //inject dependencieas
         ((GithubFetcherApplication)getApplication()).getGithubFetcherComponent().inject(this);
         setContentView(R.layout.activity_github_list);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        vistaDePrueba = findViewById(R.id.progressBar);
+
+        //register the observer
+        mObserver = new ListActivityObserver(this);
+
+        //get the view Model to observe the data
 
 
-    }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_github_list, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
     protected void onPostResume() {
         super.onPostResume();
         MutableLiveData<UserDetailedResponse> user = new MutableLiveData<>();
+        user.observe(this, new Observer<UserDetailedResponse>() {
+            @Override
+            public void onChanged(@Nullable UserDetailedResponse userDetailedResponse) {
+                Log.d(TAG, "he actualizado los datos");
+
+
+                presenter.hideProgressBar();
+            }
+        });
 
         user.setValue(new UserDetailedResponse());
-        mNetworkHelper.getUserInfo("kunotatemaki", user);
+        Log.d(TAG, "voy a pedir iformación");
+        presenter.showProgressBar();
+        presenter.getUserInfo("kunotatemaki", user);
+    }
+
+    public ListPresenter getPresenter() {
+        return presenter;
+    }
+
+    public View getVistaDePrueba() {
+        return vistaDePrueba;
     }
 }

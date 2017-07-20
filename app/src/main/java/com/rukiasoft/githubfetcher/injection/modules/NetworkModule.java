@@ -11,9 +11,9 @@ import dagger.Provides;
  */
 
 @Module
-public class GithubFetcherModule {
+public class NetworkModule {
 
-    @Provides static NetworkHelper providesNetworkHelper(){
-        return new RetrofitNetworkHelperImpl();
+    @Provides static NetworkHelper providesNetworkHelper(RetrofitNetworkHelperImpl networkHelper){
+        return networkHelper;
     }
 }
