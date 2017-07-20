@@ -1,7 +1,7 @@
 package com.rukiasoft.githubfetcher.network.retrofit;
 
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.rukiasoft.githubfetcher.model.UserBasicResponse;
@@ -17,7 +17,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.Path;
 
 /**
  * Created by Roll on 20/7/17.
@@ -26,7 +25,7 @@ import retrofit2.http.Path;
 public class RetrofitNetworkHelperImpl implements NetworkHelper {
 
     private static final String TAG = LogHelper.makeLogTag(RetrofitNetworkHelperImpl.class);
-    Retrofit retrofit = new Retrofit.Builder()
+    private Retrofit retrofit = new Retrofit.Builder()
             .baseUrl(GithubFetcherConstants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build();
@@ -39,7 +38,7 @@ public class RetrofitNetworkHelperImpl implements NetworkHelper {
         final Call<List<UserBasicResponse>> call = endpoint.getUsers();
         call.enqueue(new Callback<List<UserBasicResponse>>() {
             @Override
-            public void onResponse(Call<List<UserBasicResponse>> call, Response<List<UserBasicResponse>> response) {
+            public void onResponse(@NonNull Call<List<UserBasicResponse>> call, @NonNull Response<List<UserBasicResponse>> response) {
                 Log.d(TAG, "Response get users ok");
                 if(response.body() != null) {
                     users.setValue(response.body());
@@ -47,7 +46,7 @@ public class RetrofitNetworkHelperImpl implements NetworkHelper {
             }
 
             @Override
-            public void onFailure(Call<List<UserBasicResponse>> call, Throwable t) {
+            public void onFailure(@NonNull Call<List<UserBasicResponse>> call, @NonNull Throwable t) {
                 Log.d(TAG, "algo ha ido mal:" + t.getMessage());
             }
         });
@@ -60,7 +59,7 @@ public class RetrofitNetworkHelperImpl implements NetworkHelper {
         final Call<UserDetailedResponse> call = endpoints.getUserInfo(userName);
         call.enqueue(new Callback<UserDetailedResponse>() {
             @Override
-            public void onResponse(Call<UserDetailedResponse> call, Response<UserDetailedResponse> response) {
+            public void onResponse(@NonNull Call<UserDetailedResponse> call, @NonNull Response<UserDetailedResponse> response) {
                 Log.d(TAG, "Response get user info ok");
                 if(response.body() != null) {
                     user.setValue(response.body());
@@ -68,7 +67,7 @@ public class RetrofitNetworkHelperImpl implements NetworkHelper {
             }
 
             @Override
-            public void onFailure(Call<UserDetailedResponse> call, Throwable t) {
+            public void onFailure(@NonNull Call<UserDetailedResponse> call, @NonNull Throwable t) {
                 Log.d(TAG, "algo ha ido mal:" + t.getMessage());
             }
         });
