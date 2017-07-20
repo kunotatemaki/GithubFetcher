@@ -1,5 +1,6 @@
 package com.rukiasoft.githubfetcher.ui.activities;
 
+import android.arch.lifecycle.MutableLiveData;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -10,6 +11,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.rukiasoft.githubfetcher.R;
+import com.rukiasoft.githubfetcher.model.UserBasicResponse;
+import com.rukiasoft.githubfetcher.model.UserDetailedResponse;
+import com.rukiasoft.githubfetcher.network.NetworkHelper;
+import com.rukiasoft.githubfetcher.network.retrofit.RetrofitNetworkHelperImpl;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class GithubListActivity extends BaseActivity {
 
@@ -50,5 +58,15 @@ public class GithubListActivity extends BaseActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        NetworkHelper networkHelper = new RetrofitNetworkHelperImpl();
+        MutableLiveData<UserDetailedResponse> user = new MutableLiveData<>();
+
+        user.setValue(new UserDetailedResponse());
+        networkHelper.getUserInfo("kunotatemaki", user);
     }
 }

@@ -1,3 +1,5 @@
+package com.rukiasoft.githubfetcher;
+
 import android.app.Application;
 
 /**

@@ -1,4 +1,4 @@
-package com.rukiasoft.githubfetcher;
+package com.rukiasoft.githubfetcher.network.retrofit;
 
 import android.arch.lifecycle.LiveData;
 
@@ -15,12 +15,12 @@ import retrofit2.http.Path;
  * Created by Roll on 20/7/17.
  */
 
-public interface Endpoints {
+public interface RetrofitEndpoints {
 
 
-    @GET("users/")
-    Call<LiveData<List<UserBasicResponse>>> getUsers();
+    @GET("users")
+    Call<List<UserBasicResponse>> getUsers();
 
     @GET("users/{name}")
-    Call<LiveData<UserDetailedResponse>> getUserInfo(@Path("name") String userName);
+    Call<UserDetailedResponse> getUserInfo(@Path("name") String userName);
 }
