@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.rukiasoft.githubfetcher.GithubFetcherApplication;
 import com.rukiasoft.githubfetcher.R;
 import com.rukiasoft.githubfetcher.model.UserBasicResponse;
 import com.rukiasoft.githubfetcher.model.UserDetailedResponse;
@@ -19,23 +20,22 @@ import com.rukiasoft.githubfetcher.network.retrofit.RetrofitNetworkHelperImpl;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 public class GithubListActivity extends BaseActivity {
+
+    @Inject
+    NetworkHelper mNetworkHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ((GithubFetcherApplication)getApplication()).getGithubFetcherComponent().inject(this);
         setContentView(R.layout.activity_github_list);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
     }
 
     @Override
@@ -63,10 +63,9 @@ public class GithubListActivity extends BaseActivity {
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        NetworkHelper networkHelper = new RetrofitNetworkHelperImpl();
         MutableLiveData<UserDetailedResponse> user = new MutableLiveData<>();
 
         user.setValue(new UserDetailedResponse());
-        networkHelper.getUserInfo("kunotatemaki", user);
+        mNetworkHelper.getUserInfo("kunotatemaki", user);
     }
 }
