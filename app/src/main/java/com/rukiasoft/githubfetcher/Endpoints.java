@@ -2,8 +2,8 @@ package com.rukiasoft.githubfetcher;
 
 import android.arch.lifecycle.LiveData;
 
-import com.rukiasoft.githubfetcher.model.UserBasic;
-import com.rukiasoft.githubfetcher.model.UserDetailed;
+import com.rukiasoft.githubfetcher.model.UserBasicResponse;
+import com.rukiasoft.githubfetcher.model.UserDetailedResponse;
 
 import java.util.List;
 
@@ -19,8 +19,8 @@ public interface Endpoints {
 
 
     @GET("users/")
-    Call<LiveData<List<UserBasic>>> getUsers();
+    Call<LiveData<List<UserBasicResponse>>> getUsers();
 
     @GET("users/{name}")
-    Call<LiveData<UserDetailed>> getUserInfo(@Path("name") String userName);
+    Call<LiveData<UserDetailedResponse>> getUserInfo(@Path("name") String userName);
 }
