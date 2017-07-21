@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
 
 import com.rukiasoft.githubfetcher.GithubFetcherApplication;
 import com.rukiasoft.githubfetcher.R;
@@ -23,7 +24,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class ListActivity extends BaseActivity {
+public class ListActivity extends BaseActivity implements UsersAdapter.OnCardClickListener{
 
     private static final String TAG = LogHelper.makeLogTag(ListActivity.class);
 
@@ -34,7 +35,7 @@ public class ListActivity extends BaseActivity {
 
     ActivityListBinding mBinding;
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private UsersAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
     @Override
@@ -79,6 +80,7 @@ public class ListActivity extends BaseActivity {
 
     private void setDataInRecycler(List<UserBasic> users){
         mAdapter = new UsersAdapter(getApplicationContext(), users);
+        mAdapter.setOnCardClickListener(this);
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -88,5 +90,10 @@ public class ListActivity extends BaseActivity {
 
     public ActivityListBinding getmBinding() {
         return mBinding;
+    }
+
+    @Override
+    public void onCardClick(View view, UserBasic user) {
+        Log.d(TAG, "he pulsado: " + user.getLogin());
     }
 }
