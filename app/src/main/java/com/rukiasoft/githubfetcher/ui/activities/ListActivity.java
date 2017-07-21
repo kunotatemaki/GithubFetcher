@@ -47,7 +47,7 @@ public class ListActivity extends BaseActivity implements UsersAdapter.OnCardCli
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_list);
 
-        setSupportActionBar(mBinding.toolbar);
+        setToolbar(mBinding.toolbar);
 
         //register the observer
         mObserver = new ListActivityObserver(this);
