@@ -4,12 +4,19 @@ package com.rukiasoft.githubfetcher.model;
  * Created by Roll on 20/7/17.
  */
 
+import android.util.Log;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.rukiasoft.githubfetcher.network.model.UserDetailedResponse;
+import com.rukiasoft.githubfetcher.utils.LogHelper;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 public class UserDetailed {
 
+    private static final String TAG = LogHelper.makeLogTag(UserDetailed.class);
     private String login;
     private Integer id;
     private String avatarUrl;
@@ -45,8 +52,26 @@ public class UserDetailed {
 
     }
 
-    public UserDetailed(UserDetailedResponse response) {
-        // TODO: 21/7/17 hacer el constructor;
+    public UserDetailed loadData (UserDetailedResponse object_a){
+
+        Method[] gettersAndSetters = object_a.getClass().getMethods();
+
+        for (int i = 0; i < gettersAndSetters.length; i++) {
+            String methodName = gettersAndSetters[i].getName();
+            try{
+                if(methodName.startsWith("get")){
+                    this.getClass().getMethod(methodName.replaceFirst("get", "set") , gettersAndSetters[i].getReturnType() ).invoke(this, gettersAndSetters[i].invoke(object_a, null));
+                }else if(methodName.startsWith("is") ){
+                    this.getClass().getMethod(methodName.replaceFirst("is", "set") ,  gettersAndSetters[i].getReturnType()  ).invoke(this, gettersAndSetters[i].invoke(object_a, null));
+                }
+
+            }catch (NoSuchMethodException | IllegalArgumentException | IllegalAccessException | InvocationTargetException e) {
+                Log.d(TAG, "no hay un método set correspondiente a ese método get");
+            }
+
+        }
+        return this;
+
     }
 
     public String getLogin() {

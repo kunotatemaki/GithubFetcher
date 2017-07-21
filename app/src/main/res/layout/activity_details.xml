@@ -34,9 +34,11 @@
                 android:id="@+id/details_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                android:title="@{user.name}"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
             <ImageView
+                android:id="@+id/image_user"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:src="@drawable/mary"/>

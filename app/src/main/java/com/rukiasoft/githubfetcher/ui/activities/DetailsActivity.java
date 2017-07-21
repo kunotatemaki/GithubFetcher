@@ -6,6 +6,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
 import com.rukiasoft.githubfetcher.GithubFetcherApplication;
 import com.rukiasoft.githubfetcher.R;
 import com.rukiasoft.githubfetcher.databinding.ActivityDetailsBinding;
@@ -60,7 +61,10 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
 
     @Override
     public void setUser(UserDetailed user) {
-
+        mBinding.setUser(user);
+        Glide.with(this)
+                .load(user.getAvatarUrl())
+                .into(mBinding.imageUser);
     }
 
     @Override

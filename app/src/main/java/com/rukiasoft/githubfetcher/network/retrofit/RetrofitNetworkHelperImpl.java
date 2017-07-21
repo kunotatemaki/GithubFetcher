@@ -81,7 +81,8 @@ public class RetrofitNetworkHelperImpl implements NetworkHelper {
                 Log.d(TAG, "Response get user info ok");
                 if(response.body() != null) {
                     UserDetailedResponse userResponse = response.body();
-                    UserDetailed finalUser = new UserDetailed(userResponse);
+                    UserDetailed finalUser = new UserDetailed()
+                            .loadData(userResponse);
                     user.setValue(finalUser);
                 }
             }
