@@ -26,7 +26,7 @@ public class ListActivityObserver implements LifecycleObserver {
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     void injectViewInPresenter(){
         Log.d(TAG, "inyecto la vista en el presentador");
-        mActivity.getPresenter().setView(mActivity.getmBinding().listContent.progressBar);
+        //mActivity.getPresenter().setView(mActivity.getmBinding().listContent.progressBar);
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)

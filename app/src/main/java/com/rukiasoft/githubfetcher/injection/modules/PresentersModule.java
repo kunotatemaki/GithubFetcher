@@ -1,7 +1,7 @@
 package com.rukiasoft.githubfetcher.injection.modules;
 
 import com.rukiasoft.githubfetcher.ui.presenters.implementations.ListPresenterImpl;
-import com.rukiasoft.githubfetcher.ui.presenters.interfaces.ListPresenter;
+import com.rukiasoft.githubfetcher.ui.presenters.interfaces.ListPresenterContract;
 
 import dagger.Module;
 import dagger.Provides;
@@ -13,7 +13,7 @@ import dagger.Provides;
 @Module
 public class PresentersModule {
 
-    @Provides static ListPresenter providesListPresenter(ListPresenterImpl listPresenterImpl){
+    @Provides static ListPresenterContract providesListPresenter(ListPresenterImpl listPresenterImpl){
         return listPresenterImpl;
     }
 

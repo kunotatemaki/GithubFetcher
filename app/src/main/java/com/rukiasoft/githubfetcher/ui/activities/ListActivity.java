@@ -16,27 +16,27 @@ import com.rukiasoft.githubfetcher.databinding.ActivityListBinding;
 import com.rukiasoft.githubfetcher.model.UserBasic;
 import com.rukiasoft.githubfetcher.ui.adapters.UsersAdapter;
 import com.rukiasoft.githubfetcher.ui.observers.ListActivityObserver;
-import com.rukiasoft.githubfetcher.ui.presenters.interfaces.ListPresenter;
+import com.rukiasoft.githubfetcher.ui.presenters.interfaces.ListPresenterContract;
+import com.rukiasoft.githubfetcher.ui.presenters.interfaces.ListActivityContract;
 import com.rukiasoft.githubfetcher.ui.viewmodels.ListViewModel;
 import com.rukiasoft.githubfetcher.utils.LogHelper;
+import com.rukiasoft.githubfetcher.utils.MyViewUtils;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-public class ListActivity extends BaseActivity implements UsersAdapter.OnCardClickListener{
+public class ListActivity extends BaseActivity implements UsersAdapter.OnCardClickListener, ListActivityContract {
 
     private static final String TAG = LogHelper.makeLogTag(ListActivity.class);
 
     ListActivityObserver mObserver;
 
     @Inject
-    ListPresenter presenter;
+    ListPresenterContract presenter;
 
     ActivityListBinding mBinding;
     private RecyclerView mRecyclerView;
-    private UsersAdapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +48,8 @@ public class ListActivity extends BaseActivity implements UsersAdapter.OnCardCli
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_list);
 
         setToolbar(mBinding.toolbar);
+        MyViewUtils.setViewVisible(mBinding.toolbar);
+        MyViewUtils.setViewVisible(null);
 
         //register the observer
         mObserver = new ListActivityObserver(this);
@@ -57,9 +59,8 @@ public class ListActivity extends BaseActivity implements UsersAdapter.OnCardCli
         listViewModel.getUsers().observe(this, new Observer<List<UserBasic>>() {
             @Override
             public void onChanged(@Nullable List<UserBasic> listOfUsers) {
-                Log.d(TAG, "he actualizado los datos");
-                setDataInRecycler(listViewModel.getUsers().getValue());
-                presenter.hideProgressBar();
+                Log.d(TAG, "he actualizado los datos del servidor y los muestro por pantalla");
+                presenter.setData(listViewModel.getUsers());
             }
         });
 
@@ -69,22 +70,15 @@ public class ListActivity extends BaseActivity implements UsersAdapter.OnCardCli
         mRecyclerView.setHasFixedSize(true);
 
         // use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(this);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        if (!presenter.downloadUsersIfNecessary(listViewModel.getUsers())) {
-            //no ha descargado porque no hací falta, lo pongo en el recycler
-            setDataInRecycler(listViewModel.getUsers().getValue());
-        }
+        presenter.setData(listViewModel.getUsers());
+
     }
 
-    private void setDataInRecycler(List<UserBasic> users){
-        mAdapter = new UsersAdapter(getApplicationContext(), users);
-        mAdapter.setOnCardClickListener(this);
-        mRecyclerView.setAdapter(mAdapter);
-    }
 
-    public ListPresenter getPresenter() {
+    public ListPresenterContract getPresenter() {
         return presenter;
     }
 
@@ -95,5 +89,22 @@ public class ListActivity extends BaseActivity implements UsersAdapter.OnCardCli
     @Override
     public void onCardClick(View view, UserBasic user) {
         Log.d(TAG, "he pulsado: " + user.getLogin());
+    }
+
+    @Override
+    public void setUsers(List<UserBasic> users) {
+        UsersAdapter mAdapter = new UsersAdapter(getApplicationContext(), users);
+        mAdapter.setOnCardClickListener(this);
+        mRecyclerView.setAdapter(mAdapter);
+    }
+
+    @Override
+    public void showProgressBar() {
+        MyViewUtils.setViewVisible(mBinding.listContent.progressBar);
+    }
+
+    @Override
+    public void hideProgressBar() {
+        MyViewUtils.setViewInisible(mBinding.listContent.progressBar);
     }
 }

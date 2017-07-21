@@ -14,6 +14,12 @@ public class UserBasic {
     private String avatarUrl;
     private String htmlUrl;
 
+    public UserBasic(String login, String avatarUrl, String htmlUrl) {
+        this.login = login;
+        this.avatarUrl = avatarUrl;
+        this.htmlUrl = htmlUrl;
+    }
+
     public UserBasic(UserBasicResponse response) {
         login = response.getLogin();
         avatarUrl = response.getAvatarUrl();

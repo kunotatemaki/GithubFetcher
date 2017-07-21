@@ -50,15 +50,15 @@ implements View.OnClickListener{
         this.onCardClickListener = onCardClickListener;
     }
 
-    public static class BindingHolder extends RecyclerView.ViewHolder {
+    static class BindingHolder extends RecyclerView.ViewHolder {
         private ViewDataBinding binding;
 
-        public BindingHolder(View rowView) {
+        BindingHolder(View rowView) {
             super(rowView);
             binding = DataBindingUtil.bind(rowView);
         }
 
-        public ViewDataBinding getBinding() {
+        ViewDataBinding getBinding() {
             return binding;
         }
     }
@@ -72,9 +72,7 @@ implements View.OnClickListener{
     public BindingHolder onCreateViewHolder(ViewGroup parent, int type) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.user_basic_item, parent, false);
-        BindingHolder holder = new BindingHolder(v);
-
-        return holder;
+        return new BindingHolder(v);
     }
 
     @Override

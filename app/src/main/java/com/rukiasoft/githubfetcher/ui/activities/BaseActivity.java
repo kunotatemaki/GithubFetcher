@@ -5,7 +5,10 @@ import android.arch.lifecycle.LifecycleRegistryOwner;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.rukiasoft.githubfetcher.utils.MyViewUtils;
 
 import java.lang.reflect.Field;
 
@@ -43,4 +46,5 @@ public class BaseActivity extends AppCompatActivity implements LifecycleRegistry
     public LifecycleRegistry getLifecycle() {
         return mLifecycle;
     }
+
 }
