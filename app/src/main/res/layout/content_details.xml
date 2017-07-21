@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="com.rukiasoft.githubfetcher.model.UserDetailed"/>
+        <import type="java.lang.String"/>
+        <variable
+            name="user"
+            type="UserDetailed"/>
+    </data>
+    <android.support.constraint.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.rukiasoft.githubfetcher.ui.activities.DetailsActivity"
+    tools:showIn="@layout/activity_details">
+
+        <ProgressBar
+            android:id="@+id/details_progressbar"
+            style="?android:attr/progressBarStyle"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:visibility="invisible"
+            android:layout_width="80dp"
+            android:layout_height="80dp" />
+
+    <TextView
+        android:id="@+id/id_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:text="ID"
+        app:layout_constraintRight_toLeftOf="@+id/id"
+        app:layout_constraintHorizontal_chainStyle="spread_inside" />
+
+    <TextView
+        android:id="@+id/id"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@+id/id_text"
+        tools:text="TextView"
+        android:text="@{String.valueOf(user.id)}"
+        android:layout_marginStart="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/id_text"
+        app:layout_constraintBottom_toBottomOf="@+id/id_text" />
+
+    <TextView
+        android:id="@+id/avatar_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="avatarURL"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/avatar"
+        app:layout_constraintTop_toBottomOf="@id/id_text" />
+
+    <TextView
+        android:id="@+id/avatar"
+        android:text="@{user.avatarUrl}"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/avatar_text"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toRightOf="@+id/avatar_text"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/avatar_text"
+        tools:text="TextView" />
+    <TextView
+        android:id="@+id/url_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="URL"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/url"
+        app:layout_constraintTop_toBottomOf="@id/avatar_text" />
+
+    <TextView
+        android:id="@+id/url"
+        android:text="@{user.url}"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/url_text"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toRightOf="@+id/url_text"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/url_text"
+        tools:text="TextView" />
+    <TextView
+        android:id="@+id/html_url_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="HTML URL"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/html_url"
+        app:layout_constraintTop_toBottomOf="@id/url_text" />
+
+    <TextView
+        android:id="@+id/html_url"
+        android:text="@{user.htmlUrl}"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/html_url_text"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toRightOf="@+id/html_url_text"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/html_url_text"
+        tools:text="TextView" />
+    <TextView
+        android:id="@+id/followers_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Followers"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/followers"
+        app:layout_constraintTop_toBottomOf="@id/html_url_text" />
+
+    <TextView
+        android:id="@+id/followers"
+        android:text="@{String.valueOf(user.followers)}"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/followers_text"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toRightOf="@+id/followers_text"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/followers_text"
+        tools:text="TextView" />
+    <TextView
+        android:id="@+id/following_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Following"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/following"
+        app:layout_constraintTop_toBottomOf="@id/followers_text" />
+
+    <TextView
+        android:id="@+id/following"
+        android:text="@{String.valueOf(user.following)}"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/following_text"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toRightOf="@+id/following_text"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/following_text"
+        tools:text="TextView" />
+    <TextView
+        android:id="@+id/gists_url_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Gists URL"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/gists_url"
+        app:layout_constraintTop_toBottomOf="@id/following_text" />
+
+    <TextView
+        android:id="@+id/gists_url"
+        android:text="@{user.gistsUrl}"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/gists_url_text"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toRightOf="@+id/gists_url_text"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/gists_url_text"
+        tools:text="TextView" />
+    <TextView
+        android:id="@+id/starred_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Starred URL"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/starred"
+        app:layout_constraintTop_toBottomOf="@id/gists_url_text" />
+
+    <TextView
+        android:id="@+id/starred"
+        android:text="@{user.starredUrl}"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/starred_text"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toRightOf="@+id/starred_text"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/starred_text"
+        tools:text="TextView" />
+    <TextView
+        android:id="@+id/suscriptions_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Suscriptions URL"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/suscriptions"
+        app:layout_constraintTop_toBottomOf="@id/starred_text" />
+
+    <TextView
+        android:id="@+id/suscriptions"
+        android:text="@{user.subscriptionsUrl}"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/suscriptions_text"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toRightOf="@+id/suscriptions_text"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/suscriptions_text"
+        tools:text="TextView" />
+    <TextView
+        android:id="@+id/organizations_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Suscriptions URL"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/organizations"
+        app:layout_constraintTop_toBottomOf="@id/suscriptions_text" />
+
+    <TextView
+        android:id="@+id/organizations"
+        android:text="@{user.organizationsUrl}"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/organizations_text"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toRightOf="@+id/organizations_text"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/organizations_text"
+        tools:text="TextView" />
+    <TextView
+        android:id="@+id/repos_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="repos URL"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/repos"
+        app:layout_constraintTop_toBottomOf="@id/organizations_text" />
+
+    <TextView
+        android:id="@+id/repos"
+        android:text="@{user.reposUrl}"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/repos_text"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toRightOf="@+id/repos_text"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/repos_text"
+        tools:text="TextView" />
+    <TextView
+        android:id="@+id/events_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Eventos URL"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/events"
+        app:layout_constraintTop_toBottomOf="@id/repos_text" />
+
+    <TextView
+        android:id="@+id/events"
+        android:text="@{user.eventsUrl}"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/events_text"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toRightOf="@+id/events_text"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/events_text"
+        tools:text="TextView" />
+    <TextView
+        android:id="@+id/company_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Company"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/company"
+        app:layout_constraintTop_toBottomOf="@id/events_text" />
+
+    <TextView
+        android:id="@+id/company"
+        android:text="@{user.company}"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/company_text"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toRightOf="@+id/company_text"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/company_text"
+        tools:text="TextView" />
+    <TextView
+        android:id="@+id/email_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/email"
+        app:layout_constraintTop_toBottomOf="@id/company_text" />
+
+    <TextView
+        android:id="@+id/email"
+        android:text="@{user.email}"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/email_text"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toRightOf="@+id/email_text"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/email_text"
+        tools:text="TextView" />
+    <TextView
+        android:id="@+id/location_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Location"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/location"
+        app:layout_constraintTop_toBottomOf="@id/email_text" />
+
+    <TextView
+        android:id="@+id/location"
+        android:text="@{user.location}"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/location_text"
+        android:layout_marginStart="16dp"
+        app:layout_constraintLeft_toRightOf="@+id/location_text"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/location_text"
+        tools:text="TextView" />
+
+</android.support.constraint.ConstraintLayout>
+</layout>
+

@@ -31,15 +31,19 @@ public class UserDetailed {
     private String company;
     private String blog;
     private String location;
-    private Object email;
+    private String email;
     private Boolean hireable;
-    private Object bio;
+    private String bio;
     private Integer publicRepos;
     private Integer publicGists;
     private Integer followers;
     private Integer following;
     private String createdAt;
     private String updatedAt;
+
+    public UserDetailed(){
+
+    }
 
     public UserDetailed(UserDetailedResponse response) {
         // TODO: 21/7/17 hacer el constructor;
@@ -213,11 +217,11 @@ public class UserDetailed {
         this.location = location;
     }
 
-    public Object getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    public void setEmail(Object email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
@@ -229,11 +233,11 @@ public class UserDetailed {
         this.hireable = hireable;
     }
 
-    public Object getBio() {
+    public String getBio() {
         return bio;
     }
 
-    public void setBio(Object bio) {
+    public void setBio(String bio) {
         this.bio = bio;
     }
 
@@ -284,5 +288,4 @@ public class UserDetailed {
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
     }
-
 }

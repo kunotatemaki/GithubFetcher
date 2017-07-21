@@ -1,15 +1,12 @@
 package com.rukiasoft.githubfetcher;
 
 import android.arch.lifecycle.MutableLiveData;
-import android.util.Log;
 
-import com.google.common.base.Verify;
 import com.rukiasoft.githubfetcher.model.UserBasic;
 import com.rukiasoft.githubfetcher.network.NetworkHelper;
 import com.rukiasoft.githubfetcher.ui.presenters.implementations.ListPresenterImpl;
-import com.rukiasoft.githubfetcher.ui.presenters.interfaces.ListPresenterContract;
 import com.rukiasoft.githubfetcher.ui.presenters.interfaces.ListActivityContract;
-import com.rukiasoft.githubfetcher.ui.viewmodels.ListViewModel;
+import com.rukiasoft.githubfetcher.ui.presenters.interfaces.ListPresenterContract;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +19,10 @@ import java.util.List;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by Roll on 21/7/17.
@@ -70,13 +70,13 @@ public class ListPresenterTest {
     @Test
     public void checkListActivityContractIsSetted(){
         presenter.setView(listActivityContract);
-        assertNotNull(((ListPresenterImpl)presenter).getListActivityContract());
+        assertNotNull(((ListPresenterImpl)presenter).getmListActivityContract());
     }
 
     @Test
     public void checkListActivityContractIsRemoved(){
         presenter.removeView();
-        assertNull(((ListPresenterImpl)presenter).getListActivityContract());
+        assertNull(((ListPresenterImpl)presenter).getmListActivityContract());
     }
 
     @Test
@@ -101,6 +101,8 @@ public class ListPresenterTest {
         //mock users
         when(usersEmpty.getValue()).thenReturn(null);
         List<UserBasic> users = new ArrayList<>();
+        UserBasic userBasic = new UserBasic(NAME, IMAGE_URL, URL);
+        users.add(userBasic);
         when(usersFull.getValue()).thenReturn(users);
 
         //mock network

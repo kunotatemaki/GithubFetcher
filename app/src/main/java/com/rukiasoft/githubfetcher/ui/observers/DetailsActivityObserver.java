@@ -5,6 +5,7 @@ import android.arch.lifecycle.LifecycleObserver;
 import android.arch.lifecycle.OnLifecycleEvent;
 import android.util.Log;
 
+import com.rukiasoft.githubfetcher.ui.activities.DetailsActivity;
 import com.rukiasoft.githubfetcher.ui.activities.ListActivity;
 import com.rukiasoft.githubfetcher.utils.LogHelper;
 
@@ -12,13 +13,13 @@ import com.rukiasoft.githubfetcher.utils.LogHelper;
  * Created by Roll on 20/7/17.
  */
 
-public class ListActivityObserver implements LifecycleObserver {
+public class DetailsActivityObserver implements LifecycleObserver {
 
-    private static final String TAG = LogHelper.makeLogTag(ListActivityObserver.class);
+    private static final String TAG = LogHelper.makeLogTag(DetailsActivityObserver.class);
 
-    ListActivity mActivity;
+    DetailsActivity mActivity;
 
-    public ListActivityObserver(ListActivity activity) {
+    public DetailsActivityObserver(DetailsActivity activity) {
         mActivity = activity;
         mActivity.getLifecycle().addObserver(this);
     }

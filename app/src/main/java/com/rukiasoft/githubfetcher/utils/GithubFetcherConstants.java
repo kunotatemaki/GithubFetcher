@@ -9,6 +9,5 @@ public class GithubFetcherConstants {
     public static final String BASE_URL = "https://api.github.com/";
 
 
-
-
+    public static final String NICKNAME = "nickname";
 }

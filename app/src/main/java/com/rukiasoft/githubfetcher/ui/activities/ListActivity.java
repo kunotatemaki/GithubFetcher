@@ -2,6 +2,7 @@ package com.rukiasoft.githubfetcher.ui.activities;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,9 +17,10 @@ import com.rukiasoft.githubfetcher.databinding.ActivityListBinding;
 import com.rukiasoft.githubfetcher.model.UserBasic;
 import com.rukiasoft.githubfetcher.ui.adapters.UsersAdapter;
 import com.rukiasoft.githubfetcher.ui.observers.ListActivityObserver;
-import com.rukiasoft.githubfetcher.ui.presenters.interfaces.ListPresenterContract;
 import com.rukiasoft.githubfetcher.ui.presenters.interfaces.ListActivityContract;
+import com.rukiasoft.githubfetcher.ui.presenters.interfaces.ListPresenterContract;
 import com.rukiasoft.githubfetcher.ui.viewmodels.ListViewModel;
+import com.rukiasoft.githubfetcher.utils.GithubFetcherConstants;
 import com.rukiasoft.githubfetcher.utils.LogHelper;
 import com.rukiasoft.githubfetcher.utils.MyViewUtils;
 
@@ -47,9 +49,7 @@ public class ListActivity extends BaseActivity implements UsersAdapter.OnCardCli
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_list);
 
-        setToolbar(mBinding.toolbar);
-        MyViewUtils.setViewVisible(mBinding.toolbar);
-        MyViewUtils.setViewVisible(null);
+        setToolbar(mBinding.listToolbar);
 
         //register the observer
         mObserver = new ListActivityObserver(this);
@@ -89,6 +89,9 @@ public class ListActivity extends BaseActivity implements UsersAdapter.OnCardCli
     @Override
     public void onCardClick(View view, UserBasic user) {
         Log.d(TAG, "he pulsado: " + user.getLogin());
+        Intent intent = new Intent(this, DetailsActivity.class);
+        intent.putExtra(GithubFetcherConstants.NICKNAME, user.getLogin());
+        startActivity(intent);
     }
 
     @Override
@@ -100,11 +103,11 @@ public class ListActivity extends BaseActivity implements UsersAdapter.OnCardCli
 
     @Override
     public void showProgressBar() {
-        MyViewUtils.setViewVisible(mBinding.listContent.progressBar);
+        MyViewUtils.setViewVisible(mBinding.listContent.listProgressbar);
     }
 
     @Override
     public void hideProgressBar() {
-        MyViewUtils.setViewInisible(mBinding.listContent.progressBar);
+        MyViewUtils.setViewInisible(mBinding.listContent.listProgressbar);
     }
 }

@@ -25,7 +25,7 @@ public class ListPresenterImpl implements ListPresenterContract {
     private static final String TAG = LogHelper.makeLogTag(ListPresenterImpl.class);
     private NetworkHelper mNetworkHelper;
 
-    private ListActivityContract listActivityContract;
+    private ListActivityContract mListActivityContract;
 
     @Inject
     public ListPresenterImpl(NetworkHelper mNetworkHelper) {
@@ -41,12 +41,12 @@ public class ListPresenterImpl implements ListPresenterContract {
 
     @Override
     public void setView(ListActivityContract view){
-        listActivityContract = view;
+        mListActivityContract = view;
     }
 
     @Override
     public void removeView(){
-        listActivityContract = null;
+        mListActivityContract = null;
     }
 
 
@@ -70,8 +70,8 @@ public class ListPresenterImpl implements ListPresenterContract {
 
     private void refreshUI(MutableLiveData<List<UserBasic>> users){
         try {
-            listActivityContract = checkNotNull(listActivityContract);
-            listActivityContract.setUsers(users.getValue());
+            mListActivityContract = checkNotNull(mListActivityContract);
+            mListActivityContract.setUsers(users.getValue());
             hideProgressBar();
         }catch (NullPointerException e){
             Log.e(TAG, "No hay referencia de la actividad");
@@ -80,8 +80,8 @@ public class ListPresenterImpl implements ListPresenterContract {
 
     private void showProgressBar(){
         try {
-            listActivityContract = checkNotNull(listActivityContract);
-            listActivityContract.showProgressBar();
+            mListActivityContract = checkNotNull(mListActivityContract);
+            mListActivityContract.showProgressBar();
         }catch (NullPointerException e){
             Log.e(TAG, "No hay referencia de la actividad");
         }
@@ -89,15 +89,15 @@ public class ListPresenterImpl implements ListPresenterContract {
 
     private void hideProgressBar(){
         try {
-            listActivityContract = checkNotNull(listActivityContract);
-            listActivityContract.hideProgressBar();
+            mListActivityContract = checkNotNull(mListActivityContract);
+            mListActivityContract.hideProgressBar();
         }catch (NullPointerException e){
             Log.e(TAG, "No hay referencia de la actividad");
         }
     }
 
     @VisibleForTesting
-    public ListActivityContract getListActivityContract(){
-        return listActivityContract;
+    public ListActivityContract getmListActivityContract(){
+        return mListActivityContract;
     }
 }
