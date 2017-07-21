@@ -2,12 +2,10 @@ package com.rukiasoft.githubfetcher.network;
 
 import android.arch.lifecycle.MutableLiveData;
 
-import com.rukiasoft.githubfetcher.model.UserBasicResponse;
-import com.rukiasoft.githubfetcher.model.UserDetailedResponse;
+import com.rukiasoft.githubfetcher.model.UserBasic;
+import com.rukiasoft.githubfetcher.model.UserDetailed;
 
 import java.util.List;
-
-import retrofit2.http.Path;
 
 /**
  * Created by Roll on 20/7/17.
@@ -15,8 +13,8 @@ import retrofit2.http.Path;
 
 public interface NetworkHelper {
 
-    void getUsers(MutableLiveData<List<UserBasicResponse>> users);
+    void getUsers(MutableLiveData<List<UserBasic>> users);
 
-    void getUserInfo(String userName, MutableLiveData<UserDetailedResponse> user);
+    void getUserInfo(String userName, MutableLiveData<UserDetailed> user);
 
 }

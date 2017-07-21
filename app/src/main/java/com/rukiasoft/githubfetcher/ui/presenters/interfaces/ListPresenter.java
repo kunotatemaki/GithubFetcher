@@ -3,9 +3,7 @@ package com.rukiasoft.githubfetcher.ui.presenters.interfaces;
 import android.arch.lifecycle.MutableLiveData;
 import android.view.View;
 
-import com.rukiasoft.githubfetcher.model.UserBasicResponse;
-import com.rukiasoft.githubfetcher.model.UserDetailedResponse;
-import com.rukiasoft.githubfetcher.network.NetworkHelper;
+import com.rukiasoft.githubfetcher.model.UserBasic;
 
 import java.util.List;
 
@@ -15,19 +13,17 @@ import java.util.List;
 
 public interface ListPresenter {
 
-    void getUsers(MutableLiveData<List<UserBasicResponse>> users);
-
-    void getUserInfo(String userName, MutableLiveData<UserDetailedResponse> user);
+    void getUsers(MutableLiveData<List<UserBasic>> users);
 
     void showProgressBar();
 
     void hideProgressBar();
 
-    void setUsers(List<UserBasicResponse> users);
+    void setUsers(List<UserBasic> users);
 
     void setView(View view);
 
     void removeView();
 
-    void downloadUsersIfNecessary(MutableLiveData<List<UserBasicResponse>> users);
+    boolean downloadUsersIfNecessary(MutableLiveData<List<UserBasic>> users);
 }

@@ -1,9 +1,7 @@
 package com.rukiasoft.githubfetcher.network.retrofit;
 
-import android.arch.lifecycle.LiveData;
-
-import com.rukiasoft.githubfetcher.model.UserBasicResponse;
-import com.rukiasoft.githubfetcher.model.UserDetailedResponse;
+import com.rukiasoft.githubfetcher.network.model.UserBasicResponse;
+import com.rukiasoft.githubfetcher.network.model.UserDetailedResponse;
 
 import java.util.List;
 

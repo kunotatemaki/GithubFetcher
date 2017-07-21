@@ -1,4 +1,4 @@
-package com.rukiasoft.githubfetcher.model;
+package com.rukiasoft.githubfetcher.network.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

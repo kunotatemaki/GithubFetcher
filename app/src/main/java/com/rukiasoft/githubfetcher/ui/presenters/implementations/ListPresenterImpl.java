@@ -4,8 +4,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.util.Log;
 import android.view.View;
 
-import com.rukiasoft.githubfetcher.model.UserBasicResponse;
-import com.rukiasoft.githubfetcher.model.UserDetailedResponse;
+import com.rukiasoft.githubfetcher.model.UserBasic;
 import com.rukiasoft.githubfetcher.network.NetworkHelper;
 import com.rukiasoft.githubfetcher.ui.presenters.interfaces.ListPresenter;
 import com.rukiasoft.githubfetcher.utils.LogHelper;
@@ -31,13 +30,8 @@ public class ListPresenterImpl implements ListPresenter{
     }
 
     @Override
-    public void getUsers(MutableLiveData<List<UserBasicResponse>> users) {
+    public void getUsers(MutableLiveData<List<UserBasic>> users) {
         mNetworkHelper.getUsers(users);
-    }
-
-    @Override
-    public void getUserInfo(String userName, MutableLiveData<UserDetailedResponse> user) {
-        mNetworkHelper.getUserInfo(userName, user);
     }
 
     @Override
@@ -57,7 +51,7 @@ public class ListPresenterImpl implements ListPresenter{
     }
 
     @Override
-    public void setUsers(List<UserBasicResponse> users) {
+    public void setUsers(List<UserBasic> users) {
 
     }
 
@@ -72,11 +66,13 @@ public class ListPresenterImpl implements ListPresenter{
     }
 
     @Override
-    public void downloadUsersIfNecessary(MutableLiveData<List<UserBasicResponse>> users) {
+    public boolean downloadUsersIfNecessary(MutableLiveData<List<UserBasic>> users) {
         if(users.getValue() == null){
             Log.d(TAG, "No hay usuarios, los descargo");
             showProgressBar();
             getUsers(users);
+            return true;
         }
+        return false;
     }
 }
