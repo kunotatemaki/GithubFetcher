@@ -5,24 +5,18 @@ import android.arch.lifecycle.MutableLiveData;
 import com.rukiasoft.githubfetcher.model.UserBasic;
 import com.rukiasoft.githubfetcher.network.NetworkHelper;
 import com.rukiasoft.githubfetcher.ui.presenters.implementations.ListPresenterImpl;
-import com.rukiasoft.githubfetcher.ui.presenters.interfaces.ListActivityContract;
-import com.rukiasoft.githubfetcher.ui.presenters.interfaces.ListPresenterContract;
+import com.rukiasoft.githubfetcher.ui.presenters.interfaces.ListActivityContracts;
 
-import org.junit.Before;
-import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 /**
  * Created by Roll on 21/7/17.
@@ -41,7 +35,9 @@ public class ListPresenterTest {
     MutableLiveData<List<UserBasic>> usersFull;
 
     @Mock
-    ListActivityContract listActivityContract;
+    ListActivityContracts.RequiredViewOps listActivityContract;
+
+    @InjectMocks ListPresenterImpl presenter;
 
 
 
@@ -51,11 +47,10 @@ public class ListPresenterTest {
 
 
 
-    private ListPresenterContract presenter;
+    //private ListPresenterContract presenter;
 
-    @Before
+    /*@Before
     public void setUp(){
-        presenter = new ListPresenterImpl(networkHelper);
         presenter.setView(listActivityContract);
         configureMocks();
     }
@@ -109,7 +104,7 @@ public class ListPresenterTest {
         doNothing().when(networkHelper).getUsers(usersEmpty);
 
 
-    }
+    }*/
 
 
 }

@@ -12,7 +12,6 @@ import com.rukiasoft.githubfetcher.R;
 import com.rukiasoft.githubfetcher.databinding.ActivityDetailsBinding;
 import com.rukiasoft.githubfetcher.model.UserDetailed;
 import com.rukiasoft.githubfetcher.ui.observers.DetailsActivityObserver;
-import com.rukiasoft.githubfetcher.ui.observers.ListActivityObserver;
 import com.rukiasoft.githubfetcher.ui.presenters.interfaces.DetailsActivityContract;
 import com.rukiasoft.githubfetcher.ui.presenters.interfaces.DetailsPresenterContract;
 import com.rukiasoft.githubfetcher.ui.viewmodels.DetailsViewModel;
@@ -28,6 +27,7 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
     DetailsPresenterContract presenter;
 
     ActivityDetailsBinding mBinding;
+
     private DetailsActivityObserver mObserver;
 
 

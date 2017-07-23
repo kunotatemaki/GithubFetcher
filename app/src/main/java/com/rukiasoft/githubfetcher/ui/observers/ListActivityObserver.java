@@ -5,7 +5,7 @@ import android.arch.lifecycle.LifecycleObserver;
 import android.arch.lifecycle.OnLifecycleEvent;
 import android.util.Log;
 
-import com.rukiasoft.githubfetcher.ui.activities.ListActivity;
+import com.rukiasoft.githubfetcher.ui.presenters.interfaces.ListActivityContracts;
 import com.rukiasoft.githubfetcher.utils.LogHelper;
 
 /**
@@ -16,17 +16,21 @@ public class ListActivityObserver implements LifecycleObserver {
 
     private static final String TAG = LogHelper.makeLogTag(ListActivityObserver.class);
 
-    ListActivity mActivity;
+    private ListActivityContracts.RequiredViewOps mActivity;
 
-    public ListActivityObserver(ListActivity activity) {
+    public ListActivityObserver(ListActivityContracts.RequiredViewOps activity) {
         mActivity = activity;
-        mActivity.getLifecycle().addObserver(this);
+        mActivity.getViewLifecycle().addObserver(this);
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     void injectViewInPresenter(){
         Log.d(TAG, "inyecto la vista en el presentador");
         mActivity.getPresenter().setView(mActivity);
+        //observo la lista de usuarios
+        mActivity.getPresenter().observerListOfUsers(mActivity.getUsersFromModelView());
+        //pinto en la pantalla los usuarios
+        mActivity.getPresenter().setDataFromNetworkOrCache();
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
@@ -37,7 +41,8 @@ public class ListActivityObserver implements LifecycleObserver {
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     void removeActivityReferenceFromObserver(){
-        Log.d(TAG, "quito la referencia de la mActivity");
+        Log.d(TAG, "quito la referencia de la mActivity aquí y en el presenter (si no estaba)");
+        mActivity.getPresenter().destroy();
         mActivity = null;
     }
 

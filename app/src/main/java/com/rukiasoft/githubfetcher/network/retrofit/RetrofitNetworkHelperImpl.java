@@ -9,6 +9,7 @@ import com.rukiasoft.githubfetcher.model.UserDetailed;
 import com.rukiasoft.githubfetcher.network.NetworkHelper;
 import com.rukiasoft.githubfetcher.network.model.UserBasicResponse;
 import com.rukiasoft.githubfetcher.network.model.UserDetailedResponse;
+import com.rukiasoft.githubfetcher.ui.presenters.interfaces.ListActivityContracts;
 import com.rukiasoft.githubfetcher.utils.GithubFetcherConstants;
 import com.rukiasoft.githubfetcher.utils.LogHelper;
 

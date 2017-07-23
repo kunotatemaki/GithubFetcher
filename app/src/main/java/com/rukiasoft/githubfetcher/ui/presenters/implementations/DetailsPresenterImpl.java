@@ -4,15 +4,11 @@ import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.VisibleForTesting;
 import android.util.Log;
 
-import com.rukiasoft.githubfetcher.model.UserBasic;
 import com.rukiasoft.githubfetcher.model.UserDetailed;
 import com.rukiasoft.githubfetcher.network.NetworkHelper;
 import com.rukiasoft.githubfetcher.ui.presenters.interfaces.DetailsActivityContract;
 import com.rukiasoft.githubfetcher.ui.presenters.interfaces.DetailsPresenterContract;
-import com.rukiasoft.githubfetcher.ui.presenters.interfaces.ListActivityContract;
 import com.rukiasoft.githubfetcher.utils.LogHelper;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
