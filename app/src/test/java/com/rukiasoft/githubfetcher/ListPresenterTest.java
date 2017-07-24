@@ -57,7 +57,7 @@ public class ListPresenterTest {
 
     @Before
     public void setUp(){
-        presenter.setView(listActivityContract);
+        presenter.bindView(listActivityContract);
         configureMocks();
     }
 
@@ -70,21 +70,16 @@ public class ListPresenterTest {
 
     @Test
     public void checkListActivityContractIsSetted(){
-        presenter.setView(listActivityContract);
-        assertNotNull(presenter.getmListActivityContract());
+        presenter.bindView(listActivityContract);
+        assertNotNull(presenter.getActivityAsociatedToPresenter());
     }
 
     @Test
     public void checkActivityIsRemovedFromPresenterOnDestroy(){
-        presenter.destroy();
-        assertNull(presenter.getmListActivityContract());
+        presenter.unbindView();
+        assertNull(presenter.getActivityAsociatedToPresenter());
     }
 
-    @Test
-    public void checkActivityIsRemovedFromPresenter(){
-        presenter.removeView();
-        assertNull(presenter.getmListActivityContract());
-    }
 
     @Test
     public void checkOnEmptyListCallDownloadUsers(){

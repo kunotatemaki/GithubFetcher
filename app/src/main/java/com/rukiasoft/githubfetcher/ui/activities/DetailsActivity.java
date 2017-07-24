@@ -14,7 +14,6 @@ import com.rukiasoft.githubfetcher.R;
 import com.rukiasoft.githubfetcher.databinding.ActivityDetailsBinding;
 import com.rukiasoft.githubfetcher.injection.modules.DetailsActivityModule;
 import com.rukiasoft.githubfetcher.model.UserDetailed;
-import com.rukiasoft.githubfetcher.ui.observers.DetailsActivityObserver;
 import com.rukiasoft.githubfetcher.ui.presenters.interfaces.DetailsActivityContracts;
 import com.rukiasoft.githubfetcher.ui.viewmodels.DetailsViewModel;
 import com.rukiasoft.githubfetcher.utils.GithubFetcherConstants;
@@ -31,35 +30,41 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
     ActivityDetailsBinding mBinding;
 
     @Inject
-    public DetailsActivityObserver mObserver;
+    DetailsActivityContracts.ObserverOps mObserver;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //inyecto dependencias
-        getGApplication()
-                .getGithubFetcherComponent()
-                //.getDetailsActivityComponent(new DetailsActivityModule(this))
+        ((GithubFetcherApplication)getApplication()).
+                getGithubFetcherComponent()
+                .getDetailsActivityComponent(new DetailsActivityModule())
                 .inject(this);
-
         setContentView(R.layout.activity_details);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_details);
 
         setToolbar(mBinding.detailsToolbar);
 
+        //register the observer
+        mObserver.registerActivity(this);
+
         //obtengo los datos del intent.
         presenter.setName(getIntent().getStringExtra(GithubFetcherConstants.NICKNAME));
 
-        presenter.observerUser(getUserFromModelView());
 
-        presenter.setDataFromNetworkOrCache(getUserFromModelView());
+
 
     }
 
     @Override
-    public GithubFetcherApplication getGApplication() {
-        return (GithubFetcherApplication)getApplication();
+    public void showProgressBar() {
+        MyViewUtils.setViewVisible(mBinding.datos.detailsProgressbar);
+    }
+
+    @Override
+    public void hideProgressBar() {
+        MyViewUtils.setViewInisible(mBinding.datos.detailsProgressbar);
     }
 
     @Override
@@ -86,21 +91,13 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
     }
 
     @Override
-    public void showProgressBar() {
-        MyViewUtils.setViewVisible(mBinding.datos.detailsProgressbar);
-    }
-
-    @Override
-    public void hideProgressBar() {
-        MyViewUtils.setViewInisible(mBinding.datos.detailsProgressbar);
-    }
-
-    @Override
     public MutableLiveData<UserDetailed> getUserFromModelView() {
         final DetailsViewModel viewModel = ViewModelProviders.of(this).get(DetailsViewModel.class);
         return viewModel.getUser();
     }
 
+    @Override
+    public DetailsActivityContracts.ProvidedPresenterOps getPresenter() {
+        return presenter;
+    }
 }
-
-

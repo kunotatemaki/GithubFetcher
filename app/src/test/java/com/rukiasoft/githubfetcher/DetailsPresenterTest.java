@@ -5,10 +5,12 @@ import android.arch.lifecycle.MutableLiveData;
 import com.rukiasoft.githubfetcher.model.UserDetailed;
 import com.rukiasoft.githubfetcher.network.NetworkHelper;
 import com.rukiasoft.githubfetcher.ui.presenters.implementations.DetailsPresenterImpl;
+import com.rukiasoft.githubfetcher.ui.presenters.interfaces.DetailsActivityContracts;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
@@ -26,7 +28,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class DetailsPresenterTest {
 
-    /*@Mock
+    @Mock
     NetworkHelper networkHelper;
 
     @Mock
@@ -36,7 +38,10 @@ public class DetailsPresenterTest {
     MutableLiveData<UserDetailed> mUserFull;
 
     @Mock
-    DetailsActivityContract mDetailsActivityContract;
+    DetailsActivityContracts.RequiredViewOps mDetailsActivityContract;
+
+    @InjectMocks
+    DetailsPresenterImpl presenter;
 
 
 
@@ -46,50 +51,47 @@ public class DetailsPresenterTest {
 
 
 
-    private DetailsPresenterContract presenter;
-
     @Before
     public void setUp(){
-        presenter = new DetailsPresenterImpl(networkHelper);
-        presenter.setView(mDetailsActivityContract);
+        presenter.bindView(mDetailsActivityContract);
         configureMocks();
     }
 
     @Test
     public void checkIfShowProgressWhenRequestingUsers(){
-        presenter.setData(mUserEmpty);
+        presenter.setDataFromNetworkOrCache(mUserEmpty);
         verify(mDetailsActivityContract, times(1)).showProgressBar();
     }
 
 
     @Test
     public void checkListActivityContractIsSetted(){
-        presenter.setView(mDetailsActivityContract);
-        assertNotNull(((DetailsPresenterImpl)presenter).getmDetailsActivityContract());
+        presenter.bindView(mDetailsActivityContract);
+        assertNotNull(((DetailsPresenterImpl)presenter).getActivityAsociatedToPresenter());
     }
 
     @Test
     public void checkListActivityContractIsRemoved(){
-        presenter.removeView();
-        assertNull(((DetailsPresenterImpl)presenter).getmDetailsActivityContract());
+        presenter.unbindView();
+        assertNull(presenter.getActivityAsociatedToPresenter());
     }
 
     @Test
     public void checkOnEmptyListCallDownloadUsers(){
         presenter.setName(NAME);
-        presenter.setData(mUserEmpty);
+        presenter.setDataFromNetworkOrCache(mUserEmpty);
         verify(networkHelper, times(1)).getUserInfo(NAME, mUserEmpty);
     }
 
     @Test
     public void checkOnNonEmptyListCallSetUI(){
-        presenter.setData(mUserFull);
-        verify(mDetailsActivityContract, times(1)).setUser(mUserFull.getValue());
+        presenter.setDataFromNetworkOrCache(mUserFull);
+        verify(mDetailsActivityContract, times(1)).setUserInUI(mUserFull.getValue());
     }
 
     @Test
     public void checkIfHideProgressWhenSettingUsersOnUI(){
-        presenter.setData(mUserFull);
+        presenter.setDataFromNetworkOrCache(mUserFull);
         verify(mDetailsActivityContract, times(1)).hideProgressBar();
     }
 
@@ -104,6 +106,6 @@ public class DetailsPresenterTest {
 
 
     }
-*/
+
 
 }

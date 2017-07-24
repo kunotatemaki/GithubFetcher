@@ -21,12 +21,10 @@ import static com.bumptech.glide.request.RequestOptions.circleCropTransform;
 
 import java.util.List;
 
-import javax.inject.Singleton;
-
 /**
  * Created by Roll on 21/7/17.
  */
-@Singleton
+
 public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.BindingHolder>
 implements View.OnClickListener{
     private List<UserBasic> mUsers;
@@ -70,10 +68,6 @@ implements View.OnClickListener{
         this.mContext = context;
     }
 
-    public void setmUsers(List<UserBasic> mUsers) {
-        this.mUsers = mUsers;
-    }
-
     @Override
     public BindingHolder onCreateViewHolder(ViewGroup parent, int type) {
         View v = LayoutInflater.from(parent.getContext())
@@ -91,7 +85,6 @@ implements View.OnClickListener{
         card.setTag(user);
         Glide.with(mContext)
                 .load(user.getAvatarUrl())
-                .thumbnail(0.01f)
                 .apply(circleCropTransform()).into(imageView);
         holder.getBinding().executePendingBindings();
     }

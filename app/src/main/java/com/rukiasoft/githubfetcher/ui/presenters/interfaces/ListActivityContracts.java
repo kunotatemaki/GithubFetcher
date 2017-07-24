@@ -1,7 +1,6 @@
 package com.rukiasoft.githubfetcher.ui.presenters.interfaces;
 
 import android.app.Activity;
-import android.arch.lifecycle.LifecycleActivity;
 import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.LifecycleRegistry;
 import android.arch.lifecycle.MutableLiveData;
@@ -23,8 +22,6 @@ public interface ListActivityContracts {
     interface RequiredViewOps{
 
         // View operations permitted to Presenter
-        GithubFetcherApplication getGApplication();
-
         Activity getActivityContext();
 
         LifecycleOwner getLifecycleOwner();
@@ -51,15 +48,13 @@ public interface ListActivityContracts {
 
         void observerListOfUsers(MutableLiveData<List<UserBasic>> users);
 
-        void destroy();
-
         void setDataFromNetworkOrCache(MutableLiveData<List<UserBasic>> users);
 
         void cardClicked(View view, UserBasic user);
 
-        void setView(RequiredViewOps view);
+        void bindView(RequiredViewOps view);
 
-        void removeView();
+        void unbindView();
 
     }
 

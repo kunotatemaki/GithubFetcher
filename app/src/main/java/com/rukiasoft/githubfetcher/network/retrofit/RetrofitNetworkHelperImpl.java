@@ -9,7 +9,6 @@ import com.rukiasoft.githubfetcher.model.UserDetailed;
 import com.rukiasoft.githubfetcher.network.NetworkHelper;
 import com.rukiasoft.githubfetcher.network.model.UserBasicResponse;
 import com.rukiasoft.githubfetcher.network.model.UserDetailedResponse;
-import com.rukiasoft.githubfetcher.ui.presenters.interfaces.ListActivityContracts;
 import com.rukiasoft.githubfetcher.utils.GithubFetcherConstants;
 import com.rukiasoft.githubfetcher.utils.LogHelper;
 
@@ -17,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,6 +28,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by Roll on 20/7/17.
  */
 
+@Singleton
 public class RetrofitNetworkHelperImpl implements NetworkHelper {
 
     private static final String TAG = LogHelper.makeLogTag(RetrofitNetworkHelperImpl.class);
@@ -67,7 +68,6 @@ public class RetrofitNetworkHelperImpl implements NetworkHelper {
             @Override
             public void onFailure(@NonNull Call<List<UserBasicResponse>> call, @NonNull Throwable t) {
                 Log.d(TAG, "algo ha ido mal:" + t.getMessage());
-                users.setValue(new ArrayList<UserBasic>());
             }
         });
     }

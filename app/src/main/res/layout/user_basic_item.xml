@@ -30,7 +30,6 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginStart="8dp"
-        android:background="@drawable/circle"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="8dp"
         android:layout_marginLeft="8dp"
@@ -40,9 +39,7 @@
             android:id="@+id/profile_pic"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:src="@drawable/mary"
-            app:srcCompat="@drawable/mary" />
+            android:layout_centerInParent="true" />
     </RelativeLayout>
 
     <TextView

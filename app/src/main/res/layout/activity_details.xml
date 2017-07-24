@@ -10,46 +10,46 @@
             type="UserDetailed"/>
     </data>
 
-<android.support.design.widget.CoordinatorLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context="com.rukiasoft.githubfetcher.ui.activities.DetailsActivity">
-
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/details_app_bar"
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/app_bar_height"
+        android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        tools:context="com.rukiasoft.githubfetcher.ui.activities.DetailsActivity">
 
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:id="@+id/details_toolbar_layout"
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/details_app_bar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/app_bar_height"
             android:fitsSystemWindows="true"
-            app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            android:theme="@style/AppTheme.AppBarOverlay">
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/details_toolbar"
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/details_toolbar_layout"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:title="@{user.name}"
-                app:layout_collapseMode="pin"
-                app:popupTheme="@style/AppTheme.PopupOverlay" />
-            <ImageView
-                android:id="@+id/image_user"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:src="@drawable/mary"/>
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                app:contentScrim="?attr/colorPrimary"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-        </android.support.design.widget.CollapsingToolbarLayout>
-    </android.support.design.widget.AppBarLayout>
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/details_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:title="@{user.name}"
+                    app:layout_collapseMode="pin"
+                    app:popupTheme="@style/AppTheme.PopupOverlay" />
+                <ImageView
+                    android:id="@+id/image_user"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:src="@drawable/mary"/>
 
-    <include layout="@layout/content_details"
-        android:id="@+id/datos"
-        bind:user="@{user}"/>
+            </android.support.design.widget.CollapsingToolbarLayout>
+        </android.support.design.widget.AppBarLayout>
 
-</android.support.design.widget.CoordinatorLayout>
+        <include layout="@layout/content_details"
+            android:id="@+id/datos"
+            bind:user="@{user}"/>
+
+    </android.support.design.widget.CoordinatorLayout>
 </layout>

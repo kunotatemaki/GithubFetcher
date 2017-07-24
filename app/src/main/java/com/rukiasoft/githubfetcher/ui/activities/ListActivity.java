@@ -18,9 +18,6 @@ import com.rukiasoft.githubfetcher.databinding.ActivityListBinding;
 import com.rukiasoft.githubfetcher.injection.modules.ListActivityModule;
 import com.rukiasoft.githubfetcher.model.UserBasic;
 import com.rukiasoft.githubfetcher.ui.adapters.UsersAdapter;
-import com.rukiasoft.githubfetcher.ui.adapters.UsersAdapterOld;
-import com.rukiasoft.githubfetcher.ui.observers.ListActivityObserver;
-import com.rukiasoft.githubfetcher.ui.presenters.interfaces.DetailsActivityContracts;
 import com.rukiasoft.githubfetcher.ui.presenters.interfaces.ListActivityContracts;
 import com.rukiasoft.githubfetcher.ui.viewmodels.ListViewModel;
 import com.rukiasoft.githubfetcher.utils.LogHelper;
@@ -30,29 +27,26 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import dagger.Module;
-
 public class ListActivity extends BaseActivity implements UsersAdapter.OnCardClickListener, ListActivityContracts.RequiredViewOps {
 
     private static final String TAG = LogHelper.makeLogTag(ListActivity.class);
 
     @Inject
-    ListActivityContracts.ProvidedPresenterOps presenter;
+    ListActivityContracts.ObserverOps mObserver;
 
     @Inject
-    ListActivityObserver mObserver;
+    ListActivityContracts.ProvidedPresenterOps presenter;
 
     ActivityListBinding mBinding;
     private RecyclerView mRecyclerView;
-    private UsersAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //inject dependencieas
-        getGApplication()
+        ((GithubFetcherApplication)getApplication())
                 .getGithubFetcherComponent()
-                //.getListActivityComponent(new ListActivityModule())
+                .getListActivityComponent(new ListActivityModule())
                 .inject(this);
         setContentView(R.layout.activity_list);
 
@@ -72,12 +66,29 @@ public class ListActivity extends BaseActivity implements UsersAdapter.OnCardCli
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
+
+
     }
 
 
+    public ListActivityContracts.ProvidedPresenterOps getPresenter() {
+        return presenter;
+    }
+
+    public ActivityListBinding getmBinding() {
+        return mBinding;
+    }
+
     @Override
-    public GithubFetcherApplication getGApplication(){
-        return (GithubFetcherApplication)this.getApplication();
+    public void onCardClick(View view, UserBasic user) {
+        presenter.cardClicked(view, user);
+    }
+
+    @Override
+    public void setUsersInUI(List<UserBasic> users) {
+        UsersAdapter mAdapter = new UsersAdapter(getApplicationContext(), users);
+        mAdapter.setOnCardClickListener(this);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
@@ -92,32 +103,7 @@ public class ListActivity extends BaseActivity implements UsersAdapter.OnCardCli
 
     @Override
     public LifecycleRegistry getViewLifecycle() {
-        return getLifecycle();
-    }
-
-    @Override
-    public MutableLiveData<List<UserBasic>> getUsersFromModelView(){
-        return ViewModelProviders.of(this).get(ListViewModel.class).getUsers();
-    }
-
-
-    @Override
-    public void onCardClick(View view, UserBasic user) {
-        presenter.cardClicked(view, user);
-    }
-
-    @Override
-    public void setUsersInUI(List<UserBasic> users) {
-        //if(mAdapter == null) {
-            mAdapter = new UsersAdapter(getApplicationContext(), users);
-            mAdapter.setOnCardClickListener(this);
-            mRecyclerView.setAdapter(null);
-            mRecyclerView.setAdapter(mAdapter);
-        /*}else{
-            mAdapter.(users);
-            mAdapter.notifyDataSetChanged();
-        }*/
-
+        return this.getLifecycle();
     }
 
     @Override
@@ -131,12 +117,12 @@ public class ListActivity extends BaseActivity implements UsersAdapter.OnCardCli
     }
 
     @Override
-    public void launchNewActivity(Intent intent) {
-        startActivity(intent);
+    public MutableLiveData<List<UserBasic>> getUsersFromModelView() {
+        return ViewModelProviders.of(this).get(ListViewModel.class).getUsers();
     }
 
     @Override
-    public ListActivityContracts.ProvidedPresenterOps getPresenter() {
-        return presenter;
+    public void launchNewActivity(Intent intent) {
+        startActivity(intent);
     }
 }

@@ -32,12 +32,13 @@ public class ListPresenterImpl implements ListActivityContracts.ProvidedPresente
     private static final String TAG = LogHelper.makeLogTag(ListPresenterImpl.class);
 
     @Inject
-    public NetworkHelper mNetworkHelper;
+    NetworkHelper mNetworkHelper;
 
-    public ListActivityContracts.RequiredViewOps mView;
+    private ListActivityContracts.RequiredViewOps mActivity;
 
     @Inject
     public ListPresenterImpl() {
+
     }
 
     @Override
@@ -48,8 +49,8 @@ public class ListPresenterImpl implements ListActivityContracts.ProvidedPresente
     @Override
     public void observerListOfUsers(MutableLiveData<List<UserBasic>> users) {
         try {
-            mView = checkNotNull(mView);
-            users.observe(mView.getLifecycleOwner(), new Observer<List<UserBasic>>() {
+            mActivity = checkNotNull(mActivity);
+            users.observe(mActivity.getLifecycleOwner(), new Observer<List<UserBasic>>() {
                 @Override
                 public void onChanged(@Nullable List<UserBasic> listOfUsers) {
                     Log.d(TAG, "he actualizado los datos del servidor y los muestro por pantalla");
@@ -59,43 +60,17 @@ public class ListPresenterImpl implements ListActivityContracts.ProvidedPresente
         }catch (NullPointerException e){
             Log.e(TAG, "No hay referencia de la actividad");
         }
-
     }
 
     @Override
-    public void destroy() {
-        //me aseguro de borrar la referencia
-        this.mView = null;
+    public void unbindView() {
+        mActivity = null;
     }
-
-    @Override
-    public void cardClicked(View view, UserBasic user) {
-        try {
-            mView = checkNotNull(mView);
-            Log.d(TAG, "he pulsado: " + user.getLogin());
-            Intent intent = new Intent(mView.getActivityContext(), DetailsActivity.class);
-            intent.putExtra(GithubFetcherConstants.NICKNAME, user.getLogin());
-            mView.launchNewActivity(intent);
-        }catch (NullPointerException e){
-            Log.e(TAG, "No hay referencia de la actividad");
-        }
-    }
-
-    @Override
-    public void setView(ListActivityContracts.RequiredViewOps view) {
-        mView = view;
-    }
-
-    @Override
-    public void removeView() {
-        destroy();
-    }
-
 
     @Override
     public void setDataFromNetworkOrCache(MutableLiveData<List<UserBasic>> users) {
         try {
-            mView = checkNotNull(mView);
+            mActivity = checkNotNull(mActivity);
             if(!downloadUsersIfNecessary(users)){
                 //no ha descargado porque no hacía falta, lo pongo en el recycler
                 refreshUI(users.getValue());
@@ -103,6 +78,24 @@ public class ListPresenterImpl implements ListActivityContracts.ProvidedPresente
         }catch (NullPointerException e){
             Log.e(TAG, "No hay referencia de la actividad");
         }
+    }
+
+    @Override
+    public void cardClicked(View view, UserBasic user) {
+        try {
+            mActivity = checkNotNull(mActivity);
+            Log.d(TAG, "he pulsado: " + user.getLogin());
+            Intent intent = new Intent(mActivity.getActivityContext(), DetailsActivity.class);
+            intent.putExtra(GithubFetcherConstants.NICKNAME, user.getLogin());
+            mActivity.launchNewActivity(intent);
+        }catch (NullPointerException e){
+            Log.e(TAG, "No hay referencia de la actividad");
+        }
+    }
+    
+    @Override
+    public void bindView(ListActivityContracts.RequiredViewOps view){
+        mActivity = view;
     }
 
     private boolean downloadUsersIfNecessary(MutableLiveData<List<UserBasic>> users) {
@@ -115,46 +108,36 @@ public class ListPresenterImpl implements ListActivityContracts.ProvidedPresente
         return false;
     }
 
-    /***
-     * refresh data in view
-     * @param users list of users to set in view
-     */
     private void refreshUI(List<UserBasic> users){
         try {
-            mView = checkNotNull(mView);
-            mView.setUsersInUI(users);
+            mActivity = checkNotNull(mActivity);
+            mActivity.setUsersInUI(users);
             hideProgressBar();
         }catch (NullPointerException e){
             Log.e(TAG, "No hay referencia de la actividad");
         }
     }
 
-    /***
-     * Show progress bar in view
-     */
     private void showProgressBar(){
         try {
-            mView = checkNotNull(mView);
-            mView.showProgressBar();
+            mActivity = checkNotNull(mActivity);
+            mActivity.showProgressBar();
         }catch (NullPointerException e){
             Log.e(TAG, "No hay referencia de la actividad");
         }
     }
 
-    /***
-     * Show progress bar in view
-     */
     private void hideProgressBar(){
         try {
-            mView = checkNotNull(mView);
-            mView.hideProgressBar();
+            mActivity = checkNotNull(mActivity);
+            mActivity.hideProgressBar();
         }catch (NullPointerException e){
             Log.e(TAG, "No hay referencia de la actividad");
         }
     }
 
     @VisibleForTesting
-    public ListActivityContracts.RequiredViewOps getmListActivityContract(){
-        return mView;
+    public ListActivityContracts.RequiredViewOps getActivityAsociatedToPresenter(){
+        return mActivity;
     }
 }
