@@ -52,7 +52,7 @@ public class ListActivity extends BaseActivity implements UsersAdapter.OnCardCli
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_list);
 
-        setToolbar(mBinding.listToolbar);
+        setToolbar(mBinding.listToolbar, false);
 
         //register the observer
         mObserver.registerActivity(this);

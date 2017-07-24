@@ -17,10 +17,11 @@ public class BaseActivity extends AppCompatActivity implements LifecycleRegistry
 
     private LifecycleRegistry mLifecycle = new LifecycleRegistry(this);
 
-    protected void setToolbar(Toolbar toolbar){
+    protected void setToolbar(Toolbar toolbar, boolean backArrow){
         setSupportActionBar(toolbar);
         if(getSupportActionBar() != null){
             getSupportActionBar().setDisplayShowTitleEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(backArrow);
             try {
                 if (toolbar.getClass() != null) {
                     Field f = toolbar.getClass().getDeclaredField("mTitleTextView");

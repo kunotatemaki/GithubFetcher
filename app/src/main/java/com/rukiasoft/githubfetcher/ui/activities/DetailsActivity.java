@@ -44,7 +44,7 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
         setContentView(R.layout.activity_details);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_details);
 
-        setToolbar(mBinding.detailsToolbar);
+        setToolbar(mBinding.detailsToolbar, true);
 
         //register the observer
         mObserver.registerActivity(this);
