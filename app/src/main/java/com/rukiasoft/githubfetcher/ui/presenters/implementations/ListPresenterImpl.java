@@ -93,10 +93,9 @@ public class ListPresenterImpl implements ListActivityContracts.ProvidedPresente
 
 
     @Override
-    public void setDataFromNetworkOrCache() {
+    public void setDataFromNetworkOrCache(MutableLiveData<List<UserBasic>> users) {
         try {
             mView = checkNotNull(mView);
-            MutableLiveData<List<UserBasic>> users = mView.getUsersFromModelView();
             if(!downloadUsersIfNecessary(users)){
                 //no ha descargado porque no hacía falta, lo pongo en el recycler
                 refreshUI(users);

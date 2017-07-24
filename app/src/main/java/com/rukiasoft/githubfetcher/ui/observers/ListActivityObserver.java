@@ -5,8 +5,12 @@ import android.arch.lifecycle.LifecycleObserver;
 import android.arch.lifecycle.OnLifecycleEvent;
 import android.util.Log;
 
+import com.rukiasoft.githubfetcher.injection.modules.ListActivityModule;
+import com.rukiasoft.githubfetcher.ui.activities.ListActivity;
 import com.rukiasoft.githubfetcher.ui.presenters.interfaces.ListActivityContracts;
 import com.rukiasoft.githubfetcher.utils.LogHelper;
+
+import javax.inject.Inject;
 
 /**
  * Created by Roll on 20/7/17.
@@ -18,31 +22,41 @@ public class ListActivityObserver implements LifecycleObserver {
 
     private ListActivityContracts.RequiredViewOps mActivity;
 
+    @Inject
+    ListActivityContracts.ProvidedPresenterOps presenter;
+
     public ListActivityObserver(ListActivityContracts.RequiredViewOps activity) {
+
         mActivity = activity;
+        //inyecto dependencias aquí
+        activity.getGApplication()
+                .getGithubFetcherComponent()
+                .getListActivityComponent(new ListActivityModule((ListActivity)mActivity))
+                .inject(this);
+        //añado esto como observer la activity
         mActivity.getViewLifecycle().addObserver(this);
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    void injectViewInPresenter(){
+    void injectViewObserveAnsShowDataInPresenter(){
         Log.d(TAG, "inyecto la vista en el presentador");
-        mActivity.getPresenter().setView(mActivity);
+        presenter.setView(mActivity);
         //observo la lista de usuarios
-        mActivity.getPresenter().observerListOfUsers(mActivity.getUsersFromModelView());
+        presenter.observerListOfUsers(mActivity.getUsersFromModelView());
         //pinto en la pantalla los usuarios
-        mActivity.getPresenter().setDataFromNetworkOrCache();
+        presenter.setDataFromNetworkOrCache(mActivity.getUsersFromModelView());
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     void removeViewFromPresenter(){
         Log.d(TAG, "quito la vista del presentador");
-        mActivity.getPresenter().removeView();
+        presenter.removeView();
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     void removeActivityReferenceFromObserver(){
         Log.d(TAG, "quito la referencia de la mActivity aquí y en el presenter (si no estaba)");
-        mActivity.getPresenter().destroy();
+        presenter.destroy();
         mActivity = null;
     }
 

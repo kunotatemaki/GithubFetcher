@@ -1,5 +1,7 @@
 package com.rukiasoft.githubfetcher.ui.activities;
 
+import android.app.Activity;
+import android.app.Application;
 import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.LifecycleRegistry;
 import android.arch.lifecycle.MutableLiveData;
@@ -35,10 +37,11 @@ public class ListActivity extends BaseActivity implements UsersAdapter.OnCardCli
 
     private static final String TAG = LogHelper.makeLogTag(ListActivity.class);
 
-    ListActivityObserver mObserver;
-
     @Inject
     ListActivityContracts.ProvidedPresenterOps presenter;
+
+    @Inject
+    ListActivityObserver mObserver;
 
     ActivityListBinding mBinding;
     private RecyclerView mRecyclerView;
@@ -58,7 +61,7 @@ public class ListActivity extends BaseActivity implements UsersAdapter.OnCardCli
         setToolbar(mBinding.listToolbar);
 
         //register the observer
-        mObserver = new ListActivityObserver(this);
+        //mObserver = new ListActivityObserver(this);
 
 
         //set the adapter for the recycler view
@@ -73,12 +76,12 @@ public class ListActivity extends BaseActivity implements UsersAdapter.OnCardCli
 
 
     @Override
-    public Context getAppContext() {
-        return getActivityContext();
+    public GithubFetcherApplication getGApplication(){
+        return (GithubFetcherApplication)this.getApplication();
     }
 
     @Override
-    public Context getActivityContext() {
+    public Activity getActivityContext() {
         return this;
     }
 
@@ -90,11 +93,6 @@ public class ListActivity extends BaseActivity implements UsersAdapter.OnCardCli
     @Override
     public LifecycleRegistry getViewLifecycle() {
         return getLifecycle();
-    }
-
-    @Override
-    public ListActivityContracts.ProvidedPresenterOps getPresenter() {
-        return presenter;
     }
 
     @Override

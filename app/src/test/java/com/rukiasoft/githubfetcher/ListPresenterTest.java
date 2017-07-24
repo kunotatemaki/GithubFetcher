@@ -7,16 +7,22 @@ import com.rukiasoft.githubfetcher.network.NetworkHelper;
 import com.rukiasoft.githubfetcher.ui.presenters.implementations.ListPresenterImpl;
 import com.rukiasoft.githubfetcher.ui.presenters.interfaces.ListActivityContracts;
 
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by Roll on 21/7/17.
@@ -49,7 +55,7 @@ public class ListPresenterTest {
 
     //private ListPresenterContract presenter;
 
-    /*@Before
+    @Before
     public void setUp(){
         presenter.setView(listActivityContract);
         configureMocks();
@@ -57,38 +63,44 @@ public class ListPresenterTest {
 
     @Test
     public void checkIfShowProgressWhenRequestingUsers(){
-        presenter.setData(usersEmpty);
+        presenter.setDataFromNetworkOrCache(usersEmpty);
         verify(listActivityContract, times(1)).showProgressBar();
     }
 
 
     @Test
-    public void checkListActivityContractIsSetted(){
+    public void checkActivityIsSettedInPresenter(){
         presenter.setView(listActivityContract);
-        assertNotNull(((ListPresenterImpl)presenter).getmListActivityContract());
+        assertNotNull(presenter.getmListActivityContract());
     }
 
     @Test
-    public void checkListActivityContractIsRemoved(){
+    public void checkActivityIsRemovedFromPresenterOnDestroy(){
+        presenter.destroy();
+        assertNull(presenter.getmListActivityContract());
+    }
+
+    @Test
+    public void checkActivityIsRemovedFromPresenter(){
         presenter.removeView();
-        assertNull(((ListPresenterImpl)presenter).getmListActivityContract());
+        assertNull(presenter.getmListActivityContract());
     }
 
     @Test
     public void checkOnEmptyListCallDownloadUsers(){
-        presenter.setData(usersEmpty);
+        presenter.setDataFromNetworkOrCache(usersEmpty);
         verify(networkHelper, times(1)).getUsers(usersEmpty);
     }
 
     @Test
     public void checkOnNonEmptyListCallSetUI(){
-        presenter.setData(usersFull);
-        verify(listActivityContract, times(1)).setUsers(usersFull.getValue());
+        presenter.setDataFromNetworkOrCache(usersFull);
+        verify(listActivityContract, times(1)).setUsersInUI(usersFull.getValue());
     }
 
     @Test
     public void checkIfHideProgressWhenSettingUsersOnUI(){
-        presenter.setData(usersFull);
+        presenter.setDataFromNetworkOrCache(usersFull);
         verify(listActivityContract, times(1)).hideProgressBar();
     }
 
@@ -104,7 +116,7 @@ public class ListPresenterTest {
         doNothing().when(networkHelper).getUsers(usersEmpty);
 
 
-    }*/
+    }
 
 
 }

@@ -6,6 +6,8 @@ import com.rukiasoft.githubfetcher.ui.observers.ListActivityObserver;
 import com.rukiasoft.githubfetcher.ui.presenters.implementations.ListPresenterImpl;
 import com.rukiasoft.githubfetcher.ui.presenters.interfaces.ListActivityContracts;
 
+import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
 
@@ -34,4 +36,9 @@ public class ListActivityModule {
         return listPresenterImpl;
     }
 
+    @Provides
+    @CustomScopes.ActivityScope
+    ListActivityObserver providesObserver(){
+        return new ListActivityObserver(activity);
+    }
 }
