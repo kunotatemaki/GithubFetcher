@@ -10,12 +10,22 @@
             name="user"
             type="UserDetailed"/>
     </data>
-    <android.support.constraint.ConstraintLayout
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context="com.rukiasoft.githubfetcher.ui.activities.DetailsActivity"
-        tools:showIn="@layout/activity_details">
+        tools:context="com.rukiasoft.myapplication.ScrollingActivity"
+        tools:showIn="@layout/activity_details"
+        >
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="16dp"
+
+
+        >
+
+
 
         <ProgressBar
             android:id="@+id/details_progressbar"
@@ -35,6 +45,9 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             android:text="ID"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
             app:layout_constraintRight_toLeftOf="@+id/id"
             app:layout_constraintHorizontal_chainStyle="spread_inside" />
 
@@ -55,6 +68,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="avatarURL"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/avatar"
@@ -76,6 +92,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="URL"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/url"
@@ -97,6 +116,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="HTML URL"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/html_url"
@@ -118,6 +140,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Followers"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/followers"
@@ -139,6 +164,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Following"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/following"
@@ -160,6 +188,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Gists URL"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/gists_url"
@@ -181,6 +212,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Starred URL"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/starred"
@@ -202,6 +236,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Suscriptions URL"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/suscriptions"
@@ -223,6 +260,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Suscriptions URL"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/organizations"
@@ -244,6 +284,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="repos URL"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/repos"
@@ -265,6 +308,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Eventos URL"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/events"
@@ -286,6 +332,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Company"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/company"
@@ -307,6 +356,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Email"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/email"
@@ -328,6 +380,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Location"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textStyle="bold"
+            android:layout_marginTop="8dp"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/location"
@@ -344,7 +399,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@+id/location_text"
             tools:text="TextView" />
-
     </android.support.constraint.ConstraintLayout>
+        </android.support.v4.widget.NestedScrollView>
 </layout>
 
