@@ -7,6 +7,7 @@ import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import com.bumptech.glide.Glide;
 import com.rukiasoft.githubfetcher.GithubFetcherApplication;
@@ -52,9 +53,18 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
         //obtengo los datos del intent.
         presenter.setName(getIntent().getStringExtra(GithubFetcherConstants.NICKNAME));
 
+    }
 
-
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                super.onBackPressed();
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+        return true;
     }
 
     @Override
