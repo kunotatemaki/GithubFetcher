@@ -69,7 +69,7 @@ public class ListPresenterTest {
 
 
     @Test
-    public void checkActivityIsSettedInPresenter(){
+    public void checkListActivityContractIsSetted(){
         presenter.setView(listActivityContract);
         assertNotNull(presenter.getmListActivityContract());
     }

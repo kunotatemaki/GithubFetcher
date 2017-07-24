@@ -1,7 +1,5 @@
 package com.rukiasoft.githubfetcher.injection.modules;
 
-import com.rukiasoft.githubfetcher.injection.scopes.CustomScopes;
-import com.rukiasoft.githubfetcher.ui.activities.ListActivity;
 import com.rukiasoft.githubfetcher.ui.observers.ListActivityObserver;
 import com.rukiasoft.githubfetcher.ui.presenters.implementations.ListPresenterImpl;
 import com.rukiasoft.githubfetcher.ui.presenters.interfaces.ListActivityContracts;
@@ -18,27 +16,15 @@ import dagger.Provides;
 @Module
 public class ListActivityModule {
 
-    private ListActivity activity;
-
-    public ListActivityModule(ListActivity activity) {
-        this.activity = activity;
-    }
-
     @Provides
-    @CustomScopes.ActivityScope
-    ListActivityContracts.RequiredViewOps providesRequiredViewOps() {
-        return activity;
-    }
-
-    @Provides
-    @CustomScopes.ActivityScope
+    @Singleton
     ListActivityContracts.ProvidedPresenterOps providesPresenterOps(ListPresenterImpl listPresenterImpl) {
         return listPresenterImpl;
     }
 
     @Provides
-    @CustomScopes.ActivityScope
-    ListActivityObserver providesObserver(){
-        return new ListActivityObserver(activity);
+    @Singleton
+    ListActivityContracts.ObserverOps providesObserver(ListActivityObserver observer){
+        return observer;
     }
 }

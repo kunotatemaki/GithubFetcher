@@ -1,18 +1,15 @@
 package com.rukiasoft.githubfetcher.ui.activities;
 
 import android.app.Activity;
-import android.app.Application;
 import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.LifecycleRegistry;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 
 import com.rukiasoft.githubfetcher.GithubFetcherApplication;
@@ -21,17 +18,19 @@ import com.rukiasoft.githubfetcher.databinding.ActivityListBinding;
 import com.rukiasoft.githubfetcher.injection.modules.ListActivityModule;
 import com.rukiasoft.githubfetcher.model.UserBasic;
 import com.rukiasoft.githubfetcher.ui.adapters.UsersAdapter;
-import com.rukiasoft.githubfetcher.ui.observers.DetailsActivityObserver;
+import com.rukiasoft.githubfetcher.ui.adapters.UsersAdapterOld;
 import com.rukiasoft.githubfetcher.ui.observers.ListActivityObserver;
+import com.rukiasoft.githubfetcher.ui.presenters.interfaces.DetailsActivityContracts;
 import com.rukiasoft.githubfetcher.ui.presenters.interfaces.ListActivityContracts;
 import com.rukiasoft.githubfetcher.ui.viewmodels.ListViewModel;
-import com.rukiasoft.githubfetcher.utils.GithubFetcherConstants;
 import com.rukiasoft.githubfetcher.utils.LogHelper;
 import com.rukiasoft.githubfetcher.utils.MyViewUtils;
 
 import java.util.List;
 
 import javax.inject.Inject;
+
+import dagger.Module;
 
 public class ListActivity extends BaseActivity implements UsersAdapter.OnCardClickListener, ListActivityContracts.RequiredViewOps {
 
@@ -45,14 +44,15 @@ public class ListActivity extends BaseActivity implements UsersAdapter.OnCardCli
 
     ActivityListBinding mBinding;
     private RecyclerView mRecyclerView;
+    private UsersAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //inject dependencieas
-        ((GithubFetcherApplication)getApplication())
+        getGApplication()
                 .getGithubFetcherComponent()
-                .getListActivityComponent(new ListActivityModule(this))
+                //.getListActivityComponent(new ListActivityModule())
                 .inject(this);
         setContentView(R.layout.activity_list);
 
@@ -61,7 +61,7 @@ public class ListActivity extends BaseActivity implements UsersAdapter.OnCardCli
         setToolbar(mBinding.listToolbar);
 
         //register the observer
-        //mObserver = new ListActivityObserver(this);
+        mObserver.registerActivity(this);
 
 
         //set the adapter for the recycler view
@@ -108,9 +108,16 @@ public class ListActivity extends BaseActivity implements UsersAdapter.OnCardCli
 
     @Override
     public void setUsersInUI(List<UserBasic> users) {
-        UsersAdapter mAdapter = new UsersAdapter(getApplicationContext(), users);
-        mAdapter.setOnCardClickListener(this);
-        mRecyclerView.setAdapter(mAdapter);
+        //if(mAdapter == null) {
+            mAdapter = new UsersAdapter(getApplicationContext(), users);
+            mAdapter.setOnCardClickListener(this);
+            mRecyclerView.setAdapter(null);
+            mRecyclerView.setAdapter(mAdapter);
+        /*}else{
+            mAdapter.(users);
+            mAdapter.notifyDataSetChanged();
+        }*/
+
     }
 
     @Override
@@ -126,5 +133,10 @@ public class ListActivity extends BaseActivity implements UsersAdapter.OnCardCli
     @Override
     public void launchNewActivity(Intent intent) {
         startActivity(intent);
+    }
+
+    @Override
+    public ListActivityContracts.ProvidedPresenterOps getPresenter() {
+        return presenter;
     }
 }

@@ -18,6 +18,7 @@ import com.rukiasoft.githubfetcher.utils.LogHelper;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -25,7 +26,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * Created by Roll on 20/7/17.
  */
 
-//@CustomScopes.ActivityScope
+@Singleton
 public class ListPresenterImpl implements ListActivityContracts.ProvidedPresenterOps {
 
     private static final String TAG = LogHelper.makeLogTag(ListPresenterImpl.class);
@@ -41,7 +42,6 @@ public class ListPresenterImpl implements ListActivityContracts.ProvidedPresente
 
     @Override
     public void getUsers(MutableLiveData<List<UserBasic>> users) {
-
         mNetworkHelper.getUsers(users);
     }
 
@@ -53,7 +53,7 @@ public class ListPresenterImpl implements ListActivityContracts.ProvidedPresente
                 @Override
                 public void onChanged(@Nullable List<UserBasic> listOfUsers) {
                     Log.d(TAG, "he actualizado los datos del servidor y los muestro por pantalla");
-                    mView.setUsersInUI(listOfUsers);
+                    refreshUI(listOfUsers);
                 }
             });
         }catch (NullPointerException e){
@@ -98,12 +98,11 @@ public class ListPresenterImpl implements ListActivityContracts.ProvidedPresente
             mView = checkNotNull(mView);
             if(!downloadUsersIfNecessary(users)){
                 //no ha descargado porque no hacía falta, lo pongo en el recycler
-                refreshUI(users);
+                refreshUI(users.getValue());
             }
         }catch (NullPointerException e){
             Log.e(TAG, "No hay referencia de la actividad");
         }
-
     }
 
     private boolean downloadUsersIfNecessary(MutableLiveData<List<UserBasic>> users) {
@@ -120,10 +119,10 @@ public class ListPresenterImpl implements ListActivityContracts.ProvidedPresente
      * refresh data in view
      * @param users list of users to set in view
      */
-    private void refreshUI(MutableLiveData<List<UserBasic>> users){
+    private void refreshUI(List<UserBasic> users){
         try {
             mView = checkNotNull(mView);
-            mView.setUsersInUI(users.getValue());
+            mView.setUsersInUI(users);
             hideProgressBar();
         }catch (NullPointerException e){
             Log.e(TAG, "No hay referencia de la actividad");

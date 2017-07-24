@@ -1,9 +1,9 @@
 package com.rukiasoft.githubfetcher.injection.components;
 
 import com.rukiasoft.githubfetcher.injection.modules.AppModule;
+import com.rukiasoft.githubfetcher.injection.modules.DetailsActivityModule;
 import com.rukiasoft.githubfetcher.injection.modules.ListActivityModule;
 import com.rukiasoft.githubfetcher.injection.modules.NetworkModule;
-import com.rukiasoft.githubfetcher.injection.modules.PresentersModule;
 import com.rukiasoft.githubfetcher.ui.activities.DetailsActivity;
 import com.rukiasoft.githubfetcher.ui.activities.ListActivity;
 
@@ -16,8 +16,9 @@ import dagger.Component;
  */
 
 @Singleton
-@Component(modules = {NetworkModule.class, AppModule.class, PresentersModule.class})
+@Component(modules = {NetworkModule.class, AppModule.class, ListActivityModule.class, DetailsActivityModule.class})
 public interface GithubFetcherComponent {
-    void inject(DetailsActivity activity);
-    ListActivityComponent getListActivityComponent(ListActivityModule module);
+    //ListActivityComponent getListActivityComponent(ListActivityModule module);
+    ListActivity inject(ListActivity activity);
+    DetailsActivity inject(DetailsActivity activity);
 }

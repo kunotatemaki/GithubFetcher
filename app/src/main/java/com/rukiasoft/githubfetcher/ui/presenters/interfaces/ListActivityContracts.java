@@ -1,16 +1,16 @@
 package com.rukiasoft.githubfetcher.ui.presenters.interfaces;
 
 import android.app.Activity;
-import android.app.Application;
+import android.arch.lifecycle.LifecycleActivity;
 import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.LifecycleRegistry;
 import android.arch.lifecycle.MutableLiveData;
-import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 
 import com.rukiasoft.githubfetcher.GithubFetcherApplication;
 import com.rukiasoft.githubfetcher.model.UserBasic;
+import com.rukiasoft.githubfetcher.ui.activities.ListActivity;
 
 import java.util.List;
 
@@ -40,6 +40,8 @@ public interface ListActivityContracts {
         MutableLiveData<List<UserBasic>> getUsersFromModelView();
 
         void launchNewActivity(Intent intent);
+
+        ListActivityContracts.ProvidedPresenterOps getPresenter();
     }
 
     interface ProvidedPresenterOps{
@@ -59,6 +61,10 @@ public interface ListActivityContracts {
 
         void removeView();
 
+    }
+
+    interface ObserverOps{
+        void registerActivity(ListActivity activity);
     }
 
 }

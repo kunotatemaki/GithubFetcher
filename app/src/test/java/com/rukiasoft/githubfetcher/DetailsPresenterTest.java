@@ -2,22 +2,15 @@ package com.rukiasoft.githubfetcher;
 
 import android.arch.lifecycle.MutableLiveData;
 
-import com.rukiasoft.githubfetcher.model.UserBasic;
 import com.rukiasoft.githubfetcher.model.UserDetailed;
 import com.rukiasoft.githubfetcher.network.NetworkHelper;
 import com.rukiasoft.githubfetcher.ui.presenters.implementations.DetailsPresenterImpl;
-import com.rukiasoft.githubfetcher.ui.presenters.implementations.ListPresenterImpl;
-import com.rukiasoft.githubfetcher.ui.presenters.interfaces.DetailsActivityContract;
-import com.rukiasoft.githubfetcher.ui.presenters.interfaces.DetailsPresenterContract;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -33,7 +26,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class DetailsPresenterTest {
 
-    @Mock
+    /*@Mock
     NetworkHelper networkHelper;
 
     @Mock
@@ -111,6 +104,6 @@ public class DetailsPresenterTest {
 
 
     }
-
+*/
 
 }

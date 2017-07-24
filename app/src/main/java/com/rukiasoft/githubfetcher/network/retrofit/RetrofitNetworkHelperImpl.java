@@ -67,6 +67,7 @@ public class RetrofitNetworkHelperImpl implements NetworkHelper {
             @Override
             public void onFailure(@NonNull Call<List<UserBasicResponse>> call, @NonNull Throwable t) {
                 Log.d(TAG, "algo ha ido mal:" + t.getMessage());
+                users.setValue(new ArrayList<UserBasic>());
             }
         });
     }

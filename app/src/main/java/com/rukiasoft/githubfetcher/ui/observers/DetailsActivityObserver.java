@@ -5,9 +5,12 @@ import android.arch.lifecycle.LifecycleObserver;
 import android.arch.lifecycle.OnLifecycleEvent;
 import android.util.Log;
 
+import com.rukiasoft.githubfetcher.injection.modules.DetailsActivityModule;
 import com.rukiasoft.githubfetcher.ui.activities.DetailsActivity;
-import com.rukiasoft.githubfetcher.ui.activities.ListActivity;
+import com.rukiasoft.githubfetcher.ui.presenters.interfaces.DetailsActivityContracts;
 import com.rukiasoft.githubfetcher.utils.LogHelper;
+
+import javax.inject.Inject;
 
 /**
  * Created by Roll on 20/7/17.
@@ -17,28 +20,35 @@ public class DetailsActivityObserver implements LifecycleObserver {
 
     private static final String TAG = LogHelper.makeLogTag(DetailsActivityObserver.class);
 
-    DetailsActivity mActivity;
+    DetailsActivityContracts.RequiredViewOps mActivity;
 
-    public DetailsActivityObserver(DetailsActivity activity) {
-        mActivity = activity;
-        mActivity.getLifecycle().addObserver(this);
+    @Inject
+    DetailsActivityContracts.ProvidedPresenterOps presenter;
+
+    public DetailsActivityObserver() {
+
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     void injectViewInPresenter(){
         Log.d(TAG, "inyecto la vista en el presentador");
-        mActivity.getPresenter().setView(mActivity);
+        presenter.setView(mActivity);
+        //observo el usuario
+        presenter.observerUser(mActivity.getUserFromModelView());
+        //pinto en la pantalla el usuario
+        presenter.setDataFromNetworkOrCache(mActivity.getUserFromModelView());
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
     void removeViewFromPresenter(){
         Log.d(TAG, "quito la vista del presentador");
-        mActivity.getPresenter().removeView();
+        presenter.removeView();
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     void removeActivityReferenceFromObserver(){
         Log.d(TAG, "quito la referencia de la mActivity");
+        presenter.destroy();
         mActivity = null;
     }
 
