@@ -42,7 +42,6 @@ public class DetailsActivity extends BaseActivity implements DetailsActivityCont
                 getGithubFetcherComponent()
                 .getDetailsActivityComponent(new DetailsActivityModule())
                 .inject(this);
-        setContentView(R.layout.activity_details);
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_details);
 
         setToolbar(mBinding.detailsToolbar, true);

@@ -48,8 +48,6 @@ public class ListActivity extends BaseActivity implements UsersAdapter.OnCardCli
                 .getGithubFetcherComponent()
                 .getListActivityComponent(new ListActivityModule())
                 .inject(this);
-        setContentView(R.layout.activity_list);
-
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_list);
 
         setToolbar(mBinding.listToolbar, false);

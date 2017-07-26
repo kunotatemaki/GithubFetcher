@@ -14,6 +14,8 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.rukiasoft.githubfetcher.BR;
 import com.rukiasoft.githubfetcher.R;
+import com.rukiasoft.githubfetcher.databinding.ActivityListBinding;
+import com.rukiasoft.githubfetcher.databinding.UserBasicItemBinding;
 import com.rukiasoft.githubfetcher.model.UserBasic;
 
 import static com.bumptech.glide.request.RequestOptions.circleCropTransform;
@@ -70,8 +72,10 @@ implements View.OnClickListener{
 
     @Override
     public BindingHolder onCreateViewHolder(ViewGroup parent, int type) {
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.user_basic_item, parent, false);
+        UserBasicItemBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.user_basic_item, parent, false);
+        View v = binding.getRoot();
+//        View v = LayoutInflater.from(parent.getContext())
+//                .inflate(R.layout.user_basic_item, parent, false);
         return new BindingHolder(v);
     }
 
@@ -79,8 +83,11 @@ implements View.OnClickListener{
     public void onBindViewHolder(BindingHolder holder, int position) {
         final UserBasic user = mUsers.get(position);
         holder.getBinding().setVariable(BR.user, user);
-        ImageView imageView = holder.getBinding().getRoot().findViewById(R.id.profile_pic);
-        CardView card = holder.getBinding().getRoot().findViewById(R.id.card_view);
+        UserBasicItemBinding userBinding = (UserBasicItemBinding) holder.getBinding();
+        ImageView imageView = userBinding.profilePic;
+        CardView card = userBinding.cardView;
+        //ImageView imageView = holder.getBinding().getRoot().findViewById(R.id.profile_pic);
+        //CardView card = holder.getBinding().getRoot().findViewById(R.id.card_view);
         card.setOnClickListener(this);
         card.setTag(user);
         Glide.with(mContext)
