@@ -1,9 +1,11 @@
 package com.rukiasoft.githubfetcher.ui.adapters;
 
+import android.databinding.BindingAdapter;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.rukiasoft.githubfetcher.BR;
@@ -37,9 +39,9 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.BindingHolde
             binding.setVariable(BR.user, user);
             binding.setVariable(BR.presenter, presenter);
             binding.cardView.setTag(user);
-            Glide.with(binding.getRoot().getContext())
+            /*Glide.with(binding.getRoot().getContext())
                     .load(user.getAvatarUrl())
-                    .apply(circleCropTransform()).into(binding.profilePic);
+                    .apply(circleCropTransform()).into(binding.profilePic);*/
             binding.executePendingBindings();
         }
     }
@@ -47,6 +49,12 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.BindingHolde
     public UsersAdapter(List<UserBasic> recyclerUsers, ListActivityContracts.ProvidedPresenterOps presenter) {
         this.mUsers = recyclerUsers;
         this.presenter = presenter;
+    }
+
+    @BindingAdapter("android:src")
+    public static void setImageUrl(ImageView view, String url) {
+        Glide.with(view.getContext()).load(url)
+                .apply(circleCropTransform()).into(view);
     }
 
     @Override
