@@ -10,7 +10,6 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.rukiasoft.githubfetcher.GithubFetcherApplication;
 import com.rukiasoft.githubfetcher.R;
@@ -27,7 +26,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class ListActivity extends BaseActivity implements UsersAdapter.OnCardClickListener, ListActivityContracts.RequiredViewOps {
+public class ListActivity extends BaseActivity implements ListActivityContracts.RequiredViewOps {
 
     private static final String TAG = LogHelper.makeLogTag(ListActivity.class);
 
@@ -78,14 +77,9 @@ public class ListActivity extends BaseActivity implements UsersAdapter.OnCardCli
     }
 
     @Override
-    public void onCardClick(View view, UserBasic user) {
-        presenter.cardClicked(view, user);
-    }
-
-    @Override
     public void setUsersInUI(List<UserBasic> users) {
-        UsersAdapter mAdapter = new UsersAdapter(users);
-        mAdapter.setOnCardClickListener(this);
+        UsersAdapter mAdapter = new UsersAdapter(users, presenter);
+
         mRecyclerView.setAdapter(mAdapter);
     }
 

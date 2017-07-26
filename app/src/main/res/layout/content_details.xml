@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintLeft_toRightOf="@+id/id_text"
             tools:text="TextView"
-            android:text="@{String.valueOf(user.id)}"
+            android:text="@{String.valueOf(safeUnbox(user.id))}"
             android:layout_marginStart="16dp"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@+id/id_text"
@@ -150,7 +150,7 @@
 
         <TextView
             android:id="@+id/followers"
-            android:text="@{String.valueOf(user.followers)}"
+            android:text="@{String.valueOf(safeUnbox(user.followers))}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="@+id/followers_text"
@@ -174,7 +174,7 @@
 
         <TextView
             android:id="@+id/following"
-            android:text="@{String.valueOf(user.following)}"
+            android:text="@{String.valueOf(safeUnbox(user.following))}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="@+id/following_text"

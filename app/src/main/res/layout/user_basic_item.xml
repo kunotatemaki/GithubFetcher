@@ -5,9 +5,13 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <import type="com.rukiasoft.githubfetcher.model.UserBasic" />
+        <import type="com.rukiasoft.githubfetcher.ui.presenters.interfaces.ListActivityContracts.ProvidedPresenterOps"/>
         <variable
             name="user"
             type="UserBasic" />
+        <variable
+            name="presenter"
+            type="ProvidedPresenterOps"/>
     </data>
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -17,6 +21,7 @@
         android:clickable="true"
         android:focusable="true"
         android:foreground="?selectableItemBackground"
+        android:onClick="@{(view) -> presenter.cardClicked(view, user)}"
         card_view:cardPreventCornerOverlap="false"
         >
     <android.support.constraint.ConstraintLayout
