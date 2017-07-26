@@ -1,4 +1,4 @@
-package com.rukiasoft.githubfetcher.ui.ViewHolders;
+package com.rukiasoft.githubfetcher.ui.viewholders;
 
 import android.support.v7.widget.RecyclerView;
 

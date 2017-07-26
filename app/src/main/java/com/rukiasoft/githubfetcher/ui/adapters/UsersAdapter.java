@@ -11,7 +11,7 @@ import com.bumptech.glide.Glide;
 import com.rukiasoft.githubfetcher.R;
 import com.rukiasoft.githubfetcher.databinding.UserBasicItemBinding;
 import com.rukiasoft.githubfetcher.model.UserBasic;
-import com.rukiasoft.githubfetcher.ui.ViewHolders.UserBasicViewHolder;
+import com.rukiasoft.githubfetcher.ui.viewholders.UserBasicViewHolder;
 import com.rukiasoft.githubfetcher.ui.presenters.interfaces.ListActivityContracts;
 
 import java.util.List;
