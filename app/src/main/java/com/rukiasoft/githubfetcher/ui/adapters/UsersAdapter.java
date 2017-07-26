@@ -30,7 +30,6 @@ import java.util.List;
 public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.BindingHolder>
 implements View.OnClickListener{
     private List<UserBasic> mUsers;
-    private Context mContext;
 
     private OnCardClickListener onCardClickListener;
 
@@ -53,47 +52,43 @@ implements View.OnClickListener{
     }
 
     static class BindingHolder extends RecyclerView.ViewHolder {
-        private ViewDataBinding binding;
+        private UserBasicItemBinding binding;
 
-        BindingHolder(View rowView) {
-            super(rowView);
-            binding = DataBindingUtil.bind(rowView);
+        BindingHolder(UserBasicItemBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
 
-        ViewDataBinding getBinding() {
-            return binding;
+        public void bind(UserBasic user){
+            binding.setVariable(BR.user, user);
+            binding.cardView.setTag(user);
+            Glide.with(binding.getRoot().getContext())
+                    .load(user.getAvatarUrl())
+                    .apply(circleCropTransform()).into(binding.profilePic);
+            binding.executePendingBindings();
         }
+
     }
 
-    public UsersAdapter(Context context, List<UserBasic> recyclerUsers) {
+    public UsersAdapter(List<UserBasic> recyclerUsers) {
         this.mUsers = recyclerUsers;
-        this.mContext = context;
     }
 
     @Override
     public BindingHolder onCreateViewHolder(ViewGroup parent, int type) {
-        UserBasicItemBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.user_basic_item, parent, false);
-        View v = binding.getRoot();
-//        View v = LayoutInflater.from(parent.getContext())
-//                .inflate(R.layout.user_basic_item, parent, false);
-        return new BindingHolder(v);
+        LayoutInflater inflater =
+                LayoutInflater.from(parent.getContext());
+        UserBasicItemBinding binding =
+                DataBindingUtil.inflate(inflater, R.layout.user_basic_item, parent, false);
+        //evento de click
+        binding.cardView.setOnClickListener(this);
+        return new BindingHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(BindingHolder holder, int position) {
         final UserBasic user = mUsers.get(position);
-        holder.getBinding().setVariable(BR.user, user);
-        UserBasicItemBinding userBinding = (UserBasicItemBinding) holder.getBinding();
-        ImageView imageView = userBinding.profilePic;
-        CardView card = userBinding.cardView;
-        //ImageView imageView = holder.getBinding().getRoot().findViewById(R.id.profile_pic);
-        //CardView card = holder.getBinding().getRoot().findViewById(R.id.card_view);
-        card.setOnClickListener(this);
-        card.setTag(user);
-        Glide.with(mContext)
-                .load(user.getAvatarUrl())
-                .apply(circleCropTransform()).into(imageView);
-        holder.getBinding().executePendingBindings();
+        holder.bind(user);
     }
 
     @Override

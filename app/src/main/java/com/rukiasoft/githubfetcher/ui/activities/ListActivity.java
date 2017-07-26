@@ -84,7 +84,7 @@ public class ListActivity extends BaseActivity implements UsersAdapter.OnCardCli
 
     @Override
     public void setUsersInUI(List<UserBasic> users) {
-        UsersAdapter mAdapter = new UsersAdapter(getApplicationContext(), users);
+        UsersAdapter mAdapter = new UsersAdapter(users);
         mAdapter.setOnCardClickListener(this);
         mRecyclerView.setAdapter(mAdapter);
     }
